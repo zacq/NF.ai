@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { X, Send, Calendar, Clock } from 'lucide-react';
+import { X, Send, Calendar, Clock, Loader2, CheckCircle } from 'lucide-react';
 
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const AIRTABLE_TOKEN = import.meta.env.VITE_AIRTABLE_TOKEN;
+const LEADS_BASE    = import.meta.env.VITE_AIRTABLE_LEADS_BASE;
+const LEADS_TABLE   = import.meta.env.VITE_AIRTABLE_LEADS_TABLE;
 
 const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -16,6 +20,8 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
     date: '',
     time: ''
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
   // Prevent scrolling when modal is open
   useEffect(() => {
@@ -29,13 +35,58 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
 
+  // Reset form when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setTimeout(() => {
+        setStatus('idle');
+        setFormData({ firstName: '', lastName: '', companyName: '', phoneNumber: '', email: '', date: '', time: '' });
+      }, 300);
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you! Your request has been sent. We will contact you shortly.');
-    onClose();
+    setStatus('loading');
+    setErrorMsg('');
+
+    try {
+      const res = await fetch(
+        `https://api.airtable.com/v0/${LEADS_BASE}/${LEADS_TABLE}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            fields: {
+              Name: `${formData.firstName} ${formData.lastName}`.trim(),
+              Phone: formData.phoneNumber,
+              Email: formData.email,
+              Company: formData.companyName,
+              'Preferred Date': formData.date,
+              'Preferred Time': formData.time,
+              Status: 'New',
+              Source: 'Website Form',
+            },
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err?.error?.message || 'Submission failed');
+      }
+
+      setStatus('success');
+      setTimeout(() => onClose(), 2500);
+    } catch (err: unknown) {
+      setStatus('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -61,6 +112,18 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
         </button>
 
         <div className="p-8 md:p-12">
+          {/* Success state */}
+          {status === 'success' && (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <CheckCircle className="w-16 h-16 text-emerald-400 mb-4" />
+              <h2 className="text-2xl font-bold text-white mb-2">Request Sent!</h2>
+              <p className="text-white/60">We've received your callback request and will be in touch shortly.</p>
+            </div>
+          )}
+
+          {/* Form */}
+          {status !== 'success' && (
+            <>
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-white mb-4">Request a Callback</h2>
             <p className="text-white/60 max-w-lg mx-auto">
@@ -179,14 +242,27 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
 
+            {/* Error message */}
+            {status === 'error' && (
+              <p className="text-red-400 text-sm text-center bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3">
+                ⚠️ {errorMsg}
+              </p>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-violet-500 hover:bg-violet-600 text-white font-semibold py-4 rounded-xl shadow-lg shadow-violet-500/20 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              disabled={status === 'loading'}
+              className="w-full bg-violet-500 hover:bg-violet-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl shadow-lg shadow-violet-500/20 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              <Send className="w-5 h-5" />
-              Request Callback
+              {status === 'loading' ? (
+                <><Loader2 className="w-5 h-5 animate-spin" /> Sending...</>
+              ) : (
+                <><Send className="w-5 h-5" /> Request Callback</>
+              )}
             </button>
           </form>
+          </>
+          )}
         </div>
       </div>
     </div>
