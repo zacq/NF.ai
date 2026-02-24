@@ -43,14 +43,21 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="relative w-full max-w-2xl bg-[#0a0a1a]/90 border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-2xl bg-[#0a0a1a]/90 border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close Button */}
-        <button 
+        <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors"
+          aria-label="Close"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all"
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5" />
         </button>
 
         <div className="p-8 md:p-12">

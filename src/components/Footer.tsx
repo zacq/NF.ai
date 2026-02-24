@@ -49,14 +49,8 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
           {/* Brand column */}
           <div className="col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="relative w-8 h-8">
-                <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-cyan-400 rounded-lg flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-white" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
-                  </svg>
-                </div>
-              </div>
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/logo.png" alt="NeuraFlow Logo" className="h-10 w-auto object-contain" />
               <span className="text-xl font-bold text-white">NeuraFlow</span>
             </div>
             <p className="text-white/35 text-sm leading-relaxed mb-4">
@@ -79,7 +73,7 @@ export default function Footer() {
                 },
                 {
                   name: "LinkedIn",
-                  href: "#linkedin",
+                  href: "https://www.linkedin.com/in/zachary-munene-40598685",
                   icon: (
                     <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden="true">
                       <path
@@ -91,7 +85,7 @@ export default function Footer() {
                 },
                 {
                   name: "Upwork",
-                  href: "#upwork",
+                  href: "https://www.upwork.com",
                   icon: (
                     <span className="text-[10px] font-semibold tracking-tight">Up</span>
                   ),
@@ -122,7 +116,7 @@ export default function Footer() {
                 },
                 {
                   name: "WhatsApp",
-                  href: "#whatsapp",
+                  href: "https://api.whatsapp.com/send/?phone=254757485677&text=Hello+NeuraFlow%0D%0AI+would+like+to+learn+more+about+your+AI+growth+systems.&type=phone_number&app_absent=0",
                   icon: (
                     <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden="true">
                       <path
