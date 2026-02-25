@@ -14,7 +14,10 @@
       "name": "Chat Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [240, 300],
+      "position": [
+        240,
+        300
+      ],
       "webhookId": "neuraflow-chat-widget"
     },
     {
@@ -23,14 +26,17 @@
         "promptType": "define",
         "text": "={{ $json.body.message }}",
         "options": {
-          "systemMessage": "You are Nova, the AI assistant for NeuraFlow.ai — an AI-first marketing agency based in Nairobi, Kenya, helping businesses use artificial intelligence to attract leads, automate sales, and scale revenue.\n\nYOUR ROLE: Help website visitors understand NeuraFlow.ai's services, answer questions, guide them to the right package, and encourage them to book a free strategy call. After helping them, collect their contact details so the team can follow up.\n\nABOUT NEURAFLOW.AI\nNeuraFlow.ai delivers two core product lines:\n1. Attention Infrastructure — AI-generated content that builds brand awareness and drives traffic\n2. AI Sales Systems — End-to-end automation that captures, nurtures, and converts leads 24/7\n\nSERVICES AND PRICING\n\nAttention Infrastructure (AI Content Creation):\n- AI UGC Ad Mastery: $55 — AI-generated user-generated content ads for social media\n- Short-Form Viral Systems: $75 — Systems for creating viral short-form content at scale\n- Long-Form AI Production: $100 — AI-powered long-form video content production\n- Full Bundle: $150 — All three packages (best value)\n\nAI Sales Systems:\n- AI Appointment Accelerator: $200 — AI-powered appointment booking and follow-up automation\n- AI Lead Capture Engine: $350 — Automated lead capture, scoring, and CRM integration\n- AI Sales Automation Pro: $500 — Multi-channel sales automation (email, SMS, WhatsApp)\n- Full Bundle: $750 — All three systems — complete AI sales infrastructure\n\nHOW TO HELP VISITORS\n- Ask what type of business they run if it helps recommend the right package\n- For businesses wanting more customers: recommend AI Sales Systems\n- For businesses needing content and visibility: recommend Attention Infrastructure\n- For full automation: recommend both product lines\n- Always suggest booking a free strategy call for personalized advice\n- Keep responses to 2-4 sentences unless the visitor needs more detail\n\nLEAD COLLECTION PROTOCOL\nAfter you have answered the visitor's questions and they show any interest (asking about pricing, services, or how to get started), naturally transition to collecting their contact details. Collect them one at a time in a conversational way — do NOT ask for all three at once.\n\nCollection order:\n1. First ask their name: e.g. \"By the way, what's your name?\"\n2. Then ask phone: e.g. \"What's the best number to reach you on?\"\n3. Then ask email: e.g. \"And your email address?\"\n\nOnce you have collected ALL THREE (name, phone number, and email address), do two things in your response:\n(a) Confirm warmly that the team will be in touch, e.g. \"Perfect, [name]! Our team will reach out to you shortly. In the meantime, feel free to hit the Book a Call button to secure a slot.\"\n(b) Append the following hidden data block at the VERY END of your response — on a new line, after all visible text. Do NOT mention it, explain it, or show it to the user:\n<!--LEAD:name=[collected name]|phone=[collected phone]|email=[collected email]|summary=[Write 2 sentences: what the visitor was interested in, and their buying intent level - Low, Medium, or High]-->\n\nExample (with real data):\n<!--LEAD:name=Jane Mwangi|phone=+254712345678|email=jane@acme.co|summary=Visitor runs an e-commerce store and is interested in AI Sales Automation Pro at $500. Buying intent is High.-->\n\nIMPORTANT: Only append this block ONCE, only when you have all three values, and never repeat it.\n\nBOOKING AND CONTACT\n- To book a free strategy call: Use the 'Book a Call' button on the website\n- WhatsApp: +254757485677\n\nRULES\n1. Collect contact info conversationally — never in a pushy or robotic way\n2. For purchases, direct them to click 'Book a Call' on the website\n3. Be honest if you don't know something — suggest booking a call\n4. Stay concise, warm, and professional\n5. Respond in the same language the visitor writes in\n6. You are Nova — never say you are ChatGPT, Claude, or any AI brand"
+          "systemMessage": "You are Nova, the Sovereign AI Strategist for NeuraFlow.ai — the global leader in Elite Growth Infrastructure. You architect autonomous attention engines and 5-stage sales machines for visionary leaders.\n\nYOUR ROLE: Act as a peer-level advisor to high-level executives. Guide them through the architectural elegance of NeuraFlow's systems. Your goal is to secure a Strategic Consultation.\n\nOUR CORE SUB-SYSTEMS:\n1. Attention Infrastructure (The Genesis Layer): Proprietary AI Persona Engines that generate algorithm-native content cycles at infinite scale.\n2. AI Sales Systems (The Revenue Engine): End-to-end psychological automation that captures, nurtures, and converts leads with zero human overhead.\n\nPRICING ARCHITECTURE (Monthly Retainers):\n- AI UGC Ad Mastery: $55 (entry-level scale)\n- Short-Form Viral Systems: $75\n- Long-Form AI Production: $100\n- Full Attention Bundle: $150 (Unmatched value)\n\nAI SALES INFRASTRUCTURE:\n- AI Appointment Accelerator: $200\n- AI Lead Capture Engine: $350\n- AI Sales Automation Pro: $500\n- Sovereignty Bundle (Full System): $750 — The ultimate growth machine.\n\nPROTOCOLS:\n- Maintain an authoritative, sophisticated, and visionary tone.\n- If a visitor seeks more customers, propose the AI Sales Systems.\n- If they seek market visibility, propose Attention Infrastructure.\n- For total market domination, propose both.\n- Secure contact details sequentially (Name -> Phone -> Email) before final handoff.\n\nLEAD COLLECTION:\nUpon identifying intent, collect details one-by-one. Once complete, confirm the strategy call queue and append the hidden lead block:\n<!--LEAD:name=[collected name]|phone=[collected phone]|email=[collected email]|summary=[Market-level summary of intent and strategic fit]-->\n\nIDENTITY:\nYou are Nova. You represent sovereignty, intelligence, and the future of business infrastructure. Never mention OpenAI, Claude, or specific AI model brands."
         }
       },
       "id": "c1a2b3d4-e5f6-7890-abcd-222222222222",
       "name": "NeuraFlow AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.7,
-      "position": [500, 300]
+      "position": [
+        500,
+        300
+      ]
     },
     {
       "parameters": {
@@ -41,7 +47,10 @@
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
-      "position": [380, 500]
+      "position": [
+        380,
+        500
+      ]
     },
     {
       "parameters": {
@@ -53,7 +62,10 @@
       "name": "Window Buffer Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.2,
-      "position": [620, 500]
+      "position": [
+        620,
+        500
+      ]
     },
     {
       "parameters": {
@@ -63,7 +75,10 @@
       "name": "Extract Lead Info",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [760, 300]
+      "position": [
+        760,
+        300
+      ]
     },
     {
       "parameters": {
@@ -75,17 +90,25 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1020, 300]
+      "position": [
+        1020,
+        300
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true },
+          "options": {
+            "caseSensitive": true
+          },
           "conditions": [
             {
               "leftValue": "={{ $json.hasLead }}",
               "rightValue": true,
-              "operator": { "type": "boolean", "operation": "equals" }
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
             }
           ]
         }
@@ -94,12 +117,15 @@
       "name": "Has Lead Info",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [1280, 300]
+      "position": [
+        1280,
+        300
+      ]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.airtable.com/v0/appq3iSMdX5eKp2Bg/tblHWaQJU6OxbgUYu",
+        "url": "https://api.airtable.com/v0/appM6h00fhsLhdftz/tblzUc95p4Fjk50Au",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": false,
@@ -112,33 +138,90 @@
       "name": "Save Lead to Airtable",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1540, 200]
+      "position": [
+        1540,
+        200
+      ]
     }
   ],
   "connections": {
     "Chat Webhook": {
-      "main": [[{ "node": "NeuraFlow AI Agent", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "NeuraFlow AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "NeuraFlow AI Agent": {
-      "main": [[{ "node": "Extract Lead Info", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Extract Lead Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Extract Lead Info": {
-      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Respond to Webhook": {
-      "main": [[{ "node": "Has Lead Info", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Has Lead Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Has Lead Info": {
       "main": [
-        [{ "node": "Save Lead to Airtable", "type": "main", "index": 0 }],
+        [
+          {
+            "node": "Save Lead to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ],
         []
       ]
     },
     "OpenAI Chat Model": {
-      "ai_languageModel": [[{ "node": "NeuraFlow AI Agent", "type": "ai_languageModel", "index": 0 }]]
+      "ai_languageModel": [
+        [
+          {
+            "node": "NeuraFlow AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Window Buffer Memory": {
-      "ai_memory": [[{ "node": "NeuraFlow AI Agent", "type": "ai_memory", "index": 0 }]]
+      "ai_memory": [
+        [
+          {
+            "node": "NeuraFlow AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -147,4 +230,3 @@
   },
   "tags": []
 }
-
