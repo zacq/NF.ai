@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
+const WEBHOOK_URL = "https://primary-production-bfd8.up.railway.app/webhook/neuraflow-chat";
+
 const QUICK_REPLIES = [
   "What is NeuraFlow?",
   "How does the AI Sales System work?",
@@ -7,7 +9,7 @@ const QUICK_REPLIES = [
   "Book a call",
 ];
 
-const BOT_INTRO = "Hi! 👋 I'm the NeuraFlow assistant. I'll connect you with our team shortly. How can I help you today?";
+const BOT_INTRO = "Hi! 👋 I'm Nova, NeuraFlow's AI assistant. Ask me anything about our services, pricing, or how we can help your business grow!";
 
 interface Message {
   from: "bot" | "user";
@@ -20,26 +22,34 @@ export default function FloatingChatWidget() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const sessionId = useRef<string>(`nf-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
-  const sendMessage = (text: string) => {
+  const sendMessage = async (text: string) => {
     if (!text.trim()) return;
     setMessages((m) => [...m, { from: "user", text }]);
     setInput("");
     setTyping(true);
-    setTimeout(() => {
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, sessionId: sessionId.current }),
+      });
+      if (!res.ok) throw new Error("Bad response");
+      const data = await res.json();
+      setTyping(false);
+      setMessages((m) => [...m, { from: "bot", text: data.reply ?? "I didn't catch that — please try again!" }]);
+    } catch {
       setTyping(false);
       setMessages((m) => [
         ...m,
-        {
-          from: "bot",
-          text: "Thanks for reaching out! Our team will get back to you shortly. You can also reach us on WhatsApp for a faster response. 🚀",
-        },
+        { from: "bot", text: "I'm having a bit of trouble right now 😅 Reach us on WhatsApp (+254757485677) or hit the Book a Call button — we'll get back to you fast!" },
       ]);
-    }, 1500);
+    }
   };
 
   return (
