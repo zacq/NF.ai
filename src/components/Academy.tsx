@@ -188,7 +188,11 @@ function LayerSection({ title, subtitle, color, intro, children, id }: LayerSect
   );
 }
 
-export default function Academy() {
+interface AcademyProps {
+  onBookingClick?: () => void;
+}
+
+export default function Academy({ onBookingClick }: AcademyProps) {
   useEffect(() => {
     document.documentElement.style.scrollBehavior = 'smooth';
     return () => {
@@ -439,7 +443,10 @@ export default function Academy() {
                 ))}
               </div>
 
-              <button className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white px-8 py-3 rounded-lg font-semibold transition-all flex items-center gap-2 mx-auto shadow-lg shadow-violet-900/50">
+              <button
+                onClick={onBookingClick}
+                className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white px-8 py-3 rounded-lg font-semibold transition-all flex items-center gap-2 mx-auto shadow-lg shadow-violet-900/50"
+              >
                 Start Capstone Course <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -504,7 +511,6 @@ export default function Academy() {
         </div>
       </footer>
 
-      <WhatsAppButton />
       <AcademyChatWidget />
     </div>
   );

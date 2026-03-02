@@ -2,11 +2,12 @@ import { useState } from "react";
 
 interface NavbarProps {
   scrolled: boolean;
+  onBookingClick: () => void;
 }
 
 // socialLinks removed for a cleaner, authority-focused navigation.
 
-export default function Navbar({ scrolled }: NavbarProps) {
+export default function Navbar({ scrolled, onBookingClick }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuItems = [
@@ -14,7 +15,6 @@ export default function Navbar({ scrolled }: NavbarProps) {
     { name: "Services", href: "#two-engines" },
     { name: "Portfolio", href: "#portfolio" },
     { name: "Academy", href: "/#/academy", external: true },
-    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -53,16 +53,23 @@ export default function Navbar({ scrolled }: NavbarProps) {
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-primary transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
+            <button
+              onClick={onBookingClick}
+              className="text-xs uppercase tracking-[0.15em] font-bold text-white/50 hover:text-white transition-all duration-300 relative group"
+            >
+              Contact
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-primary transition-all duration-300 group-hover:w-full"></span>
+            </button>
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-6">
-            <a
-              href="#book-call"
+            <button
+              onClick={onBookingClick}
               className="relative px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest text-white border border-brand-primary/30 bg-brand-primary/10 backdrop-blur-md overflow-hidden transition-all duration-300 hover:bg-brand-primary hover:text-white hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] active:scale-95"
             >
               Consult
-            </a>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -94,10 +101,19 @@ export default function Navbar({ scrolled }: NavbarProps) {
                 {item.name}
               </a>
             ))}
+            <button
+              onClick={() => { onBookingClick(); setMobileOpen(false); }}
+              className="block w-full text-left text-sm text-white/60 hover:text-white transition-colors py-2 px-3 rounded-lg hover:bg-white/5"
+            >
+              Contact
+            </button>
             <div className="border-t border-white/10 pt-3 mt-3">
-              <a href="#book-call" className="block text-sm font-semibold px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-cyan-500 text-white text-center">
-                Book a Call
-              </a>
+              <button
+                onClick={() => { onBookingClick(); setMobileOpen(false); }}
+                className="block w-full text-sm font-semibold px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-cyan-500 text-white text-center"
+              >
+                Consult
+              </button>
             </div>
           </div>
         )}

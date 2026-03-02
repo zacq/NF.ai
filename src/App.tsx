@@ -19,6 +19,8 @@ export function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(window.location.hash);
 
+  const openBooking = () => setIsModalOpen(true);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -26,8 +28,11 @@ export function App() {
     // Listen for hash changes
     const handleHashChange = () => setCurrentHash(window.location.hash);
     window.addEventListener('hashchange', handleHashChange);
-    // Also check hash on load
     setCurrentHash(window.location.hash);
+
+    // Custom event for components that can't use props (e.g. Navbar)
+    const handleBookingEvent = () => setIsModalOpen(true);
+    window.addEventListener('open-booking-modal', handleBookingEvent);
 
     const clickHandler = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -42,7 +47,9 @@ export function App() {
         "Book Demo",
         "Get Started Free",
         "Start Pro Trial",
-        "Request Callback"
+        "Request Callback",
+        "Initiate Strategy Call",
+        "Start Implementation",
       ];
 
       if (bookingTriggers.some(trigger => text.includes(trigger))) {
@@ -56,29 +63,33 @@ export function App() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('open-booking-modal', handleBookingEvent);
       document.removeEventListener('click', clickHandler);
     };
   }, []);
 
-  // Render Academy page for #/academy hash
-  if (currentHash === '#/academy' || currentHash === '#academy') {
-    return <Academy />;
-  }
+  const isAcademy = currentHash === '#/academy' || currentHash === '#academy';
 
   return (
-    <div className="min-h-screen bg-[#050510] text-white overflow-x-hidden">
-      <Navbar scrolled={scrolled} />
-      <Hero />
-      <TwoGrowthEngines />
-      <TrustedTeams />
-      <ProblemSection />
-      <SystemArchitecture />
-      <YouTubeSection />
-      <Footer />
-      <FloatingChatWidget />
+    <>
+      {isAcademy ? (
+        <Academy onBookingClick={openBooking} />
+      ) : (
+        <div className="min-h-screen bg-[#050510] text-white overflow-x-hidden">
+          <Navbar scrolled={scrolled} onBookingClick={openBooking} />
+          <Hero />
+          <TwoGrowthEngines />
+          <TrustedTeams />
+          <ProblemSection />
+          <SystemArchitecture />
+          <YouTubeSection />
+          <Footer />
+          <FloatingChatWidget />
+        </div>
+      )}
       <BookingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <PricingModal />
       <SalesPricingModal />
-    </div>
+    </>
   );
 }
