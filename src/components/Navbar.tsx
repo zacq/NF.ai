@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { Sun, Moon } from "lucide-react";
 
 interface NavbarProps {
   scrolled: boolean;
   onBookingClick: () => void;
+  isDark: boolean;
+  onToggleTheme: () => void;
 }
 
-// socialLinks removed for a cleaner, authority-focused navigation.
-
-export default function Navbar({ scrolled, onBookingClick }: NavbarProps) {
+export default function Navbar({ scrolled, onBookingClick, isDark, onToggleTheme }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuItems = [
@@ -62,13 +63,20 @@ export default function Navbar({ scrolled, onBookingClick }: NavbarProps) {
             </button>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center gap-6">
+          {/* CTA Button + Theme Toggle */}
+          <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onBookingClick}
               className="relative px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest text-white border border-brand-primary/30 bg-brand-primary/10 backdrop-blur-md overflow-hidden transition-all duration-300 hover:bg-brand-primary hover:text-white hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] active:scale-95"
             >
               Consult
+            </button>
+            <button
+              onClick={onToggleTheme}
+              aria-label="Toggle light/dark mode"
+              className="p-2 rounded-lg border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20 hover:bg-white/10 transition-all duration-300"
+            >
+              {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           </div>
 

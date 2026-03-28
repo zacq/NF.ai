@@ -18,6 +18,22 @@ export function App() {
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(window.location.hash);
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    const saved = localStorage.getItem("nf-theme");
+    const dark = saved !== "light";
+    // Apply class immediately so there's no flash on reload
+    if (!dark) document.documentElement.classList.add("light");
+    return dark;
+  });
+
+  const toggleTheme = () => {
+    setIsDark((prev) => {
+      const next = !prev;
+      document.documentElement.classList.toggle("light", !next);
+      localStorage.setItem("nf-theme", next ? "dark" : "light");
+      return next;
+    });
+  };
 
   const openBooking = () => setIsModalOpen(true);
 
@@ -76,7 +92,7 @@ export function App() {
         <Academy onBookingClick={openBooking} />
       ) : (
         <div className="min-h-screen bg-[#050510] text-white overflow-x-hidden">
-          <Navbar scrolled={scrolled} onBookingClick={openBooking} />
+          <Navbar scrolled={scrolled} onBookingClick={openBooking} isDark={isDark} onToggleTheme={toggleTheme} />
           <Hero />
           <TwoGrowthEngines />
           <TrustedTeams />

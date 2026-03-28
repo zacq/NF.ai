@@ -118,9 +118,76 @@ export default function TwoGrowthEngines() {
           </div>
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-white/30 text-sm max-w-2xl mx-auto">
-            Both systems integrate seamlessly. Attention Infrastructure fuels the Traffic stage, feeding the AI Sales System with qualified leads.
+        {/* What You Really Get */}
+        <div className="mt-20">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/50 text-xs font-medium uppercase tracking-widest mb-3">
+              What You Really Get
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-bold text-white">
+              Every system included in your infrastructure
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              {
+                icon: "⭐",
+                title: "Reputation Management Workflows",
+                description:
+                  "Automated systems that monitor, respond to, and amplify your brand's online presence across platforms. AI-driven review responses, sentiment tracking, and proactive reputation signals — operating 24/7 without human oversight.",
+                color: "from-violet-500/20 to-purple-500/10 border-violet-500/20",
+                accent: "text-violet-400",
+              },
+              {
+                icon: "🔄",
+                title: "Database Reactivation Workflows",
+                description:
+                  "Re-engage dormant leads and past customers through precision-timed, AI-personalized outreach sequences. Turn cold contacts into warm opportunities using behavioural triggers and multi-channel nudges.",
+                color: "from-cyan-500/20 to-blue-500/10 border-cyan-500/20",
+                accent: "text-cyan-400",
+              },
+              {
+                icon: "💬",
+                title: "WhatsApp & Web Agents Setup",
+                description:
+                  "Deploy conversational AI agents across WhatsApp and your website that qualify, capture, and route leads instantly. No missed messages, no delayed responses — intelligent agents that sell while you sleep.",
+                color: "from-emerald-500/20 to-teal-500/10 border-emerald-500/20",
+                accent: "text-emerald-400",
+              },
+              {
+                icon: "🎙️",
+                title: "A.I Voice Agents",
+                description:
+                  "Human-sounding AI voice agents that handle inbound inquiries, outbound follow-ups, and appointment setting over the phone. Consistent, scalable, and always on-brand.",
+                color: "from-orange-500/20 to-amber-500/10 border-orange-500/20",
+                accent: "text-orange-400",
+              },
+              {
+                icon: "🖥️",
+                title: "Local A.I Agent Installation",
+                description:
+                  "Agentic workflow systems that run locally within your business ecosystem without being exposed to the online environment. Full AI capability, complete data sovereignty, zero cloud dependency.",
+                color: "from-rose-500/20 to-pink-500/10 border-rose-500/20",
+                accent: "text-rose-400",
+              },
+            ].map((tile, i) => (
+              <div
+                key={i}
+                className={`relative p-6 rounded-2xl border bg-gradient-to-b ${tile.color} hover:brightness-110 transition-all duration-300`}
+              >
+                <div className={`text-2xl mb-3`}>{tile.icon}</div>
+                <h4 className="text-white font-bold text-base mb-2">{tile.title}</h4>
+                <p className="text-white/50 text-sm leading-relaxed">{tile.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Closing Statement */}
+        <div className="mt-14 text-center border-t border-white/5 pt-10">
+          <p className="text-white/40 text-base max-w-3xl mx-auto italic leading-relaxed">
+            "All systems integrate seamlessly. Attention Infrastructure fuels the Traffic stage, feeding the AI Sales System with qualified leads."
           </p>
         </div>
       </div>

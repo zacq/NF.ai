@@ -31,6 +31,22 @@
   width: max-content;
 }
 
+@keyframes marquee-ltr {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee-ltr {
+  animation: marquee-ltr 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-ltr {
+    animation: none;
+  }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -47,6 +63,137 @@
 
 .animate-pulse-soft {
   animation: pulse-soft 8s ease-in-out infinite;
+}
+
+/* ============================================================
+   LIGHT MODE — comprehensive overrides
+   ============================================================ */
+html.light {
+  --color-brand-bg: #f0f0ff;
+  --color-brand-primary: #6d28d9;
+  --color-brand-secondary: #0369a1;
+  --color-brand-accent: #a21caf;
+}
+
+/* Base */
+html.light body {
+  background-color: #f0f0ff;
+  color: #0f0f1a;
+}
+
+/* ── Text ─────────────────────────────────────────────────── */
+/* All text-white variants → near-black (opacity hierarchy preserved via our grading) */
+html.light [class*="text-white"] {
+  color: #0f0f1a !important;
+}
+
+/* gray-XXX text — make fully dark */
+html.light [class*="text-gray-1"],
+html.light [class*="text-gray-2"],
+html.light [class*="text-gray-3"],
+html.light [class*="text-gray-4"] {
+  color: #374151 !important;
+}
+html.light [class*="text-gray-5"],
+html.light [class*="text-gray-6"] {
+  color: #6b7280 !important;
+}
+
+/* Keep gradient text visible (bg-clip-text text-transparent) — no override needed */
+
+/* ── Backgrounds ───────────────────────────────────────────── */
+/* Page wrapper and sections with hardcoded dark hex values */
+html.light .min-h-screen,
+html.light [class*="bg-brand-bg"] {
+  background-color: #f0f0ff !important;
+}
+
+/* Hardcoded hex dark backgrounds: #05, #0a, #0d, #03 etc. */
+html.light [class*="bg-[#0"] {
+  background-color: #e8e8f8 !important;
+}
+
+/* Subtle white overlay cards (bg-white/3, bg-white/5 etc.) → subtle dark overlay */
+html.light [class*="bg-white/"] {
+  background-color: rgba(10, 10, 40, 0.05) !important;
+}
+
+/* Gradient card panels that start from dark violet/cyan — soften them */
+html.light [class*="from-violet-900"],
+html.light [class*="from-cyan-900"] {
+  --tw-gradient-from: rgba(109, 40, 217, 0.07) !important;
+}
+html.light [class*="to-\[#0a0a2f\]"],
+html.light [class*="to-\[#0a1a2f\]"],
+html.light [class*="to-\[#0a0a10\]"] {
+  --tw-gradient-to: rgba(10, 10, 40, 0.04) !important;
+}
+
+/* Navbar backdrop */
+html.light nav[class*="bg-brand-bg"],
+html.light nav[class*="bg-[#"] {
+  background-color: rgba(240, 240, 255, 0.85) !important;
+}
+
+/* Canvas — dim so particles aren't glaring */
+html.light canvas {
+  opacity: 0.12 !important;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* ── Borders ───────────────────────────────────────────────── */
+html.light [class*="border-white/"] {
+  border-color: rgba(10, 10, 40, 0.12) !important;
+}
+
+/* ── Card / surface areas ──────────────────────────────────── */
+html.light [class*="backdrop-blur"] {
+  background-color: rgba(240, 240, 255, 0.7) !important;
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+/* Solid white buttons (e.g. "Initiate Strategy Call") — invisible on light bg.
+   Flip to brand-primary so they remain prominent. */
+html.light a[class*="bg-white"]:not([class*="bg-white/"]),
+html.light button[class*="bg-white"]:not([class*="bg-white/"]) {
+  background-color: var(--color-brand-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 20px rgba(109, 40, 217, 0.25) !important;
+}
+
+/* text-brand-bg used as button text color — in light mode brand-bg is light, so text disappears.
+   Force it to white when inside a solid button, or dark otherwise. */
+html.light [class*="text-brand-bg"] {
+  color: #ffffff !important;
+}
+
+/* Ghost / outline buttons — give them a visible brand-tinted border + subtle bg */
+html.light a[class*="border-white/20"],
+html.light button[class*="border-white/20"],
+html.light a[class*="border-white/15"],
+html.light button[class*="border-white/15"] {
+  border-color: rgba(109, 40, 217, 0.35) !important;
+  background-color: rgba(109, 40, 217, 0.06) !important;
+  color: #0f0f1a !important;
+}
+
+/* Navbar "Consult" button — brand-primary tint, stay readable */
+html.light button[class*="bg-brand-primary/10"] {
+  background-color: rgba(109, 40, 217, 0.12) !important;
+  border-color: rgba(109, 40, 217, 0.4) !important;
+  color: #0f0f1a !important;
+}
+
+/* Keep gradient buttons (from-brand-primary, from-violet-600 etc.) as-is — they're already coloured */
+
+/* ── Placeholder text ──────────────────────────────────────── */
+html.light ::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Scrollbar track */
+html.light::-webkit-scrollbar-track {
+  background: #e8e8f8;
 }
 
 * {

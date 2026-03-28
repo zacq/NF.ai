@@ -7,6 +7,7 @@ import {
   Brain,
   MessageSquare,
   Code,
+  Terminal,
   Bot,
   Users,
   FileText,
@@ -16,6 +17,8 @@ import {
   MessageCircle,
   X,
   Send,
+  Globe,
+  BookOpen,
 } from 'lucide-react';
 
 // Floating Chat Widget Component (for Academy page)
@@ -46,16 +49,16 @@ function AcademyChatWidget() {
           <div className="p-4 h-64 overflow-y-auto bg-[#0a0a10]">
             <div className="bg-white/5 rounded-lg p-3 mb-3 border border-white/5">
               <p className="text-gray-300 text-sm">
-                👋 Welcome to NeuraFlow Academy. Ask anything about the 3-layer architecture, course tracks, or how to apply this to your business.
+                👋 Welcome to NeuraFlow Academy. Ask anything about the curriculum, Claude Code workflows, or how to apply AI systems to your business.
               </p>
             </div>
             <div className="bg-white/5 rounded-lg p-3 border border-white/5">
               <p className="text-gray-400 text-xs mb-2">Suggested questions:</p>
               <div className="space-y-1.5">
                 {[
-                  'Where should I start if I am new to systems?',
+                  "Where should I start if I'm new to AI systems?",
                   'How does the Capstone project work?',
-                  'What skills will I have after Layer 3?',
+                  'Can I apply this to my existing business?',
                 ].map((q) => (
                   <button
                     key={q}
@@ -81,7 +84,6 @@ function AcademyChatWidget() {
                 <Send className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-[10px] text-gray-600 mt-2 text-center">Webhook endpoint ready for integration.</p>
           </div>
         </div>
       )}
@@ -96,22 +98,6 @@ function AcademyChatWidget() {
   );
 }
 
-// WhatsApp Floating Button
-function WhatsAppButton() {
-  return (
-    <a
-      href="https://wa.me/1234567890"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 left-6 w-14 h-14 bg-green-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-green-900/50 hover:scale-105 transition-transform z-50 border border-white/20"
-    >
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-      </svg>
-    </a>
-  );
-}
-
 // Course Card Component
 interface CourseCardProps {
   icon: React.ReactNode;
@@ -119,11 +105,17 @@ interface CourseCardProps {
   description: string;
   colorClass: string;
   bgClass: string;
+  badge?: string;
 }
 
-function CourseCard({ icon, title, description, colorClass, bgClass }: CourseCardProps) {
+function CourseCard({ icon, title, description, colorClass, bgClass, badge }: CourseCardProps) {
   return (
-    <div className="bg-[#0d0d14] border border-white/5 rounded-xl p-6 hover:border-white/10 transition-all group">
+    <div className="bg-[#0d0d14] border border-white/5 rounded-xl p-6 hover:border-white/10 transition-all group relative">
+      {badge && (
+        <span className="absolute top-4 right-4 text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/20">
+          {badge}
+        </span>
+      )}
       <div className={`w-12 h-12 ${bgClass} rounded-lg flex items-center justify-center mb-4`}>
         <div className={colorClass}>{icon}</div>
       </div>
@@ -141,25 +133,17 @@ interface LayerSectionProps {
   title: string;
   subtitle: string;
   color: 'blue' | 'purple' | 'orange' | 'violet';
-  intro?: string[];
+  intro?: React.ReactNode;
   children: React.ReactNode;
   id?: string;
 }
 
 function LayerSection({ title, subtitle, color, intro, children, id }: LayerSectionProps) {
   const colorStyles = {
-    blue: {
-      gradient: 'from-blue-400 to-cyan-400',
-    },
-    purple: {
-      gradient: 'from-fuchsia-400 to-purple-400',
-    },
-    orange: {
-      gradient: 'from-orange-400 to-red-400',
-    },
-    violet: {
-      gradient: 'from-violet-400 to-purple-400',
-    },
+    blue:   { gradient: 'from-blue-400 to-cyan-400' },
+    purple: { gradient: 'from-fuchsia-400 to-purple-400' },
+    orange: { gradient: 'from-orange-400 to-red-400' },
+    violet: { gradient: 'from-violet-400 to-purple-400' },
   } as const;
 
   const style = colorStyles[color];
@@ -168,17 +152,13 @@ function LayerSection({ title, subtitle, color, intro, children, id }: LayerSect
     <section id={id} className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          <h2
-            className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${style.gradient} bg-clip-text text-transparent mb-2`}
-          >
+          <h2 className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${style.gradient} bg-clip-text text-transparent mb-2`}>
             {title}
           </h2>
           <p className="text-gray-300 text-sm md:text-base mb-4">{subtitle}</p>
           {intro && (
-            <div className="space-y-2 max-w-2xl mx-auto text-sm md:text-base text-gray-400">
-              {intro.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+            <div className="max-w-2xl mx-auto text-sm md:text-base text-gray-400">
+              {intro}
             </div>
           )}
         </div>
@@ -219,71 +199,159 @@ export default function Academy({ onBookingClick }: AcademyProps) {
               </div>
               <div>
                 <span className="text-white font-bold text-lg tracking-tight">NeuraFlow</span>
-                <span className="block text-[10px] text-gray-400 uppercase tracking-widest">
-                  Academy
-                </span>
+                <span className="block text-[10px] text-gray-400 uppercase tracking-widest">Academy</span>
               </div>
             </a>
-            <a
-              href="/"
-              className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2"
-            >
+            <a href="/" className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
               ← Back to Home
             </a>
           </div>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+      {/* ── SECTION 1: Hero ── */}
+      <section className="relative pt-20 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/10 text-violet-300 text-xs font-medium uppercase tracking-widest mb-6">
+            NeuraFlow Academy
+          </div>
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             <span className="block bg-gradient-to-r from-violet-300 via-white to-fuchsia-300 bg-clip-text text-transparent">
-              NeuraFlow Academy
+              Build Intelligent Systems.
+            </span>
+            <span className="block bg-gradient-to-r from-fuchsia-300 via-white to-violet-300 bg-clip-text text-transparent">
+              Not Just Automations.
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-100 mb-4">
-            Build Intelligent Systems. Not Just Automations.
-          </p>
-          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-4">
-            The Academy is structured as a 3-Layer Architecture.
+
+          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-3">
+            The Academy is structured as a 4-Layer Architecture.
           </p>
           <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-8">
-            You don’t just learn tools. You learn how to engineer complete AI-powered business
+            You don't just learn tools. You learn how to engineer complete AI-powered business
             systems from the ground up.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-gray-400">
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-400" />
-              Layer 1: Foundations
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-fuchsia-400" />
-              Layer 2: Intelligence
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-orange-400" />
-              Layer 3: Application
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-violet-400" />
-              Final Layer: Capstone
-            </span>
+          {/* Layer index pills */}
+          <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-gray-400 mb-10">
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-blue-400" />Layer 1: Foundations</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-fuchsia-400" />Layer 2: Intelligence</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-orange-400" />Layer 3: Application</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-violet-400" />Final Layer: Capstone</span>
+          </div>
+
+          {/* Anthropic positioning add-on */}
+          <div className="max-w-2xl mx-auto p-5 rounded-2xl border border-violet-500/20 bg-gradient-to-b from-violet-500/10 to-transparent text-left">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-violet-300">Built on Anthropic's AI Ecosystem</span>
+            </div>
+            <p className="text-gray-300 text-sm leading-relaxed mb-2">
+              This Academy leverages Claude and Anthropic tools as the primary environment for learning, building, and deploying AI systems.
+            </p>
+            <p className="text-gray-400 text-sm mb-3 italic">
+              You don't just learn AI. You train inside it.
+            </p>
+            <a
+              href="https://www.anthropic.com/learn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              Explore Anthropic Learning Resources →
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Layer 1: Foundations */}
+      {/* ── SECTION 2: Social Proof Strip ── */}
+      <section className="py-6 px-4 border-y border-white/5 bg-white/[0.01]">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
+            {[
+              { value: '200+', label: 'Systems Built' },
+              { value: '4-Layer', label: 'Curriculum' },
+              { value: 'Live', label: 'Build Sessions' },
+              { value: 'Done-With-You', label: 'Support' },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="text-white font-bold text-lg md:text-xl">{stat.value}</div>
+                <div className="text-gray-500 text-xs uppercase tracking-widest mt-0.5">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 2.5: Training Environment ── */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-900/20 to-[#0a0a2f] overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+              {/* Left: copy */}
+              <div className="p-8 md:p-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/10 text-violet-300 text-[10px] font-bold uppercase tracking-widest mb-5">
+                  Training Environment
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  Train Inside Real AI Systems
+                </h2>
+                <p className="text-gray-400 text-sm leading-relaxed mb-3">
+                  NeuraFlow Academy is built on top of Anthropic's ecosystem, with Claude Code as the primary interface for building.
+                </p>
+                <p className="text-gray-400 text-sm leading-relaxed mb-3">
+                  Every system you design, test, and deploy is executed inside real AI environments — not simulations.
+                </p>
+                <p className="text-gray-300 text-sm font-medium mb-6">
+                  You learn by interacting with production-grade intelligence.
+                </p>
+                <a
+                  href="https://www.anthropic.com/learn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors font-medium"
+                >
+                  <Globe className="w-4 h-4" />
+                  Explore Anthropic Resources →
+                </a>
+              </div>
+
+              {/* Right: feature list */}
+              <div className="p-8 md:p-10 border-t md:border-t-0 md:border-l border-violet-500/10">
+                <p className="text-gray-500 text-xs uppercase tracking-widest mb-5">What this means for you</p>
+                <ul className="space-y-4">
+                  {[
+                    { icon: '◈', text: 'Claude-powered system design & reasoning workflows' },
+                    { icon: '⚡', text: 'Real-time prompt execution & refinement' },
+                    { icon: '▸', text: 'AI-assisted coding inside Claude Code' },
+                    { icon: '◉', text: 'Structured learning using Anthropic methodologies' },
+                    { icon: '∞', text: 'Direct exposure to evolving AI capabilities' },
+                  ].map((item) => (
+                    <li key={item.text} className="flex items-start gap-3">
+                      <span className="text-violet-400 text-sm mt-0.5 flex-shrink-0">{item.icon}</span>
+                      <span className="text-gray-300 text-sm">{item.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 3: Layer 1: Foundations ── */}
       <LayerSection
         id="foundations"
         title="Layer 1: Foundations"
         subtitle="System Building Blocks"
         color="blue"
-        intro={[
-          'Before intelligence. Before automation. You master the infrastructure.',
-          'These are the technical primitives that power every advanced system you will ever build.',
-        ]}
+        intro={
+          <div className="space-y-2">
+            <p>Before intelligence. Before automation. You master the infrastructure.</p>
+            <p>These are the technical primitives that power every advanced system you will ever build.</p>
+          </div>
+        }
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <CourseCard
@@ -296,7 +364,7 @@ export default function Academy({ onBookingClick }: AcademyProps) {
           <CourseCard
             icon={<Webhook className="w-6 h-6" />}
             title="Webhooks"
-            description="Move data between platforms in real time. Master webhook-based communication that allows tools to talk to each other seamlessly."
+            description="Move data between platforms in real time. Master webhook-based communication that allows your tools to talk to each other seamlessly — no manual handoffs, no delays."
             colorClass="text-blue-400"
             bgClass="bg-blue-500/20"
           />
@@ -310,97 +378,115 @@ export default function Academy({ onBookingClick }: AcademyProps) {
           <CourseCard
             icon={<Database className="w-6 h-6" />}
             title="Databases & Vector Databases"
-            description="Store, retrieve, embed, and search structured and unstructured data. Create intelligent memory systems for AI-powered applications."
+            description="Store, retrieve, embed, and search structured and unstructured data. Create intelligent memory systems for AI-powered applications that get smarter over time."
             colorClass="text-blue-400"
             bgClass="bg-blue-500/20"
           />
         </div>
       </LayerSection>
 
-      {/* Layer 2: Intelligence */}
+      {/* ── SECTION 4: Layer 2: Intelligence ── */}
       <LayerSection
         id="intelligence"
         title="Layer 2: Intelligence"
-        subtitle="AI Capabilities"
+        subtitle="AI Capabilities — Powered by Claude"
         color="purple"
-        intro={[
-          'This is where systems stop being automated… and start becoming intelligent.',
-          'You learn how to design reasoning engines that power decision-making inside your workflows.',
-        ]}
+        intro={
+          <div className="space-y-2">
+            <p>This is where systems stop being automated… and start becoming intelligent.</p>
+            <p>
+              This layer is powered by <span className="text-violet-300 font-medium">Claude</span>. You learn how to design reasoning systems using Anthropic's models — enabling structured thinking, tool use, and controlled AI behaviour inside your workflows.
+            </p>
+          </div>
+        }
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <CourseCard
             icon={<Brain className="w-6 h-6" />}
             title="Large Language Models (LLMs)"
-            description="Control and deploy LLMs as reasoning engines inside automated systems. Build logic-driven agents that analyze, respond, and adapt dynamically."
+            description="Work directly with Claude as your primary reasoning engine. Learn how to structure inputs, guide outputs, and build systems that think — not just respond — using Anthropic's approach."
             colorClass="text-fuchsia-400"
             bgClass="bg-fuchsia-500/20"
           />
           <CourseCard
             icon={<MessageSquare className="w-6 h-6" />}
             title="Prompt Engineering"
-            description="Design structured prompts that produce predictable, production-ready AI outputs. Turn AI from a guessing machine into a precision tool."
+            description="Engineer prompts specifically for Claude. Learn structured prompting, system-level instruction design, and how to control AI outputs with precision using Anthropic's practices."
             colorClass="text-fuchsia-400"
             bgClass="bg-fuchsia-500/20"
           />
           <CourseCard
             icon={<Code className="w-6 h-6" />}
             title="AI Vibe Coding"
-            description="Build functional apps and automations using AI-assisted development workflows. Accelerate development without sacrificing architecture quality."
+            description="Build functional apps and automations using AI-assisted development workflows. Accelerate your output without sacrificing the quality of the architecture underneath."
             colorClass="text-fuchsia-400"
             bgClass="bg-fuchsia-500/20"
+          />
+          <CourseCard
+            icon={<Terminal className="w-6 h-6" />}
+            title="Claude Code Workflows"
+            description="Use Claude as a development partner. Build applications, scripts, and automations using AI-assisted coding inside Claude Code. Translate ideas into working systems faster."
+            colorClass="text-fuchsia-400"
+            bgClass="bg-fuchsia-500/20"
+            badge="New"
           />
         </div>
       </LayerSection>
 
-      {/* Layer 3: Application */}
+      {/* ── SECTION 5: Layer 3: Application ── */}
       <LayerSection
         id="application"
         title="Layer 3: Application"
         subtitle="User-Facing Systems"
         color="orange"
-        intro={[
-          'Now you deploy.',
-          'This layer transforms foundations and intelligence into revenue-generating, client-facing systems.',
-        ]}
+        intro={
+          <div className="space-y-2">
+            <p>Now you deploy.</p>
+            <p>This layer transforms foundations and intelligence into revenue-generating, client-facing systems that operate without you.</p>
+          </div>
+        }
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <CourseCard
             icon={<Bot className="w-6 h-6" />}
             title="AI Chatbots & Voice Agents"
-            description="Deploy inbound and outbound chat and voice agents that interact with users and trigger workflows. Turn conversations into automated actions."
+            description="Deploy inbound and outbound chat and voice agents that interact with users and trigger workflows automatically. Turn every conversation into a tracked, automated action."
             colorClass="text-orange-400"
             bgClass="bg-orange-500/20"
           />
           <CourseCard
             icon={<Users className="w-6 h-6" />}
             title="CRM Systems & Automations"
-            description="Build intelligent CRM pipelines that automate lead management, follow-ups, tracking, and reporting. Engineer sales infrastructure that runs continuously."
+            description="Build intelligent CRM pipelines that automate lead management, follow-ups, tracking, and reporting. Engineer sales infrastructure that runs continuously — with or without your team."
             colorClass="text-orange-400"
             bgClass="bg-orange-500/20"
           />
           <CourseCard
             icon={<FileText className="w-6 h-6" />}
             title="AI Content Generation"
-            description="Automate marketing, sales, and support content as part of end-to-end processes. Integrate content production directly into your automation stack."
+            description="Automate marketing, sales, and support content as part of end-to-end processes. Integrate content production directly into your automation stack — not as a separate tool, but as a live engine."
             colorClass="text-orange-400"
             bgClass="bg-orange-500/20"
           />
         </div>
       </LayerSection>
 
-      {/* Final Layer: Capstone */}
+      {/* ── SECTION 6: Capstone ── */}
       <LayerSection
         id="capstone"
         title="Final Layer: Capstone"
         subtitle="Business Process Automation"
         color="violet"
-        intro={[
-          'This is where everything converges.',
-          'You combine workflows, APIs, databases, LLMs, chatbots, CRMs, and content generation into fully automated business processes.',
-        ]}
+        intro={
+          <div className="space-y-2">
+            <p>This is where everything converges.</p>
+            <p>You deploy real AI-powered solutions using Anthropic tools — demonstrating applied intelligence in live environments.</p>
+            <p>You combine workflows, APIs, databases, LLMs, chatbots, CRMs, and content generation into fully automated business processes.</p>
+          </div>
+        }
       >
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Main capstone card */}
           <div className="bg-[#0d0d14] border border-violet-500/30 rounded-2xl p-8 md:p-10 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl" />
 
@@ -411,19 +497,14 @@ export default function Academy({ onBookingClick }: AcademyProps) {
 
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Business Process Automation</h3>
 
+              <p className="text-gray-400 mb-4 max-w-xl mx-auto text-sm md:text-base">
+                By the end of the Capstone, you will be able to build automation that runs your business end to end.
+              </p>
               <p className="text-gray-400 mb-6 max-w-xl mx-auto text-sm md:text-base">
-                By the end of the Capstone, you will be able to build automation that runs your
-                business end to end.
+                You will architect systems that coordinate AI, humans, and data across every revenue-critical workflow — without dependency on any single person.
               </p>
 
-              <p className="text-gray-400 mb-6 max-w-xl mx-auto text-sm md:text-base">
-                You will architect systems that coordinate AI, humans, and data across every
-                revenue-critical workflow.
-              </p>
-
-              <p className="text-gray-300 font-medium mb-4 text-sm md:text-base">
-                By the end of the Capstone, you will be able to build:
-              </p>
+              <p className="text-gray-300 font-medium mb-4 text-sm md:text-base">By the end of the Capstone, you will be able to build:</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
                 {[
@@ -431,13 +512,10 @@ export default function Academy({ onBookingClick }: AcademyProps) {
                   'Customer support automation engines',
                   'Operations & internal workflow automation',
                   'AI-powered decision systems',
-                  'Revenue and cost-optimization pipelines',
+                  'Revenue and cost-optimisation pipelines',
                 ].map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 bg-white/5 rounded-lg p-3 border border-white/5"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+                  <div key={item} className="flex items-center gap-3 bg-white/5 rounded-lg p-3 border border-white/5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
                   </div>
                 ))}
@@ -451,18 +529,102 @@ export default function Academy({ onBookingClick }: AcademyProps) {
               </button>
             </div>
           </div>
+
+          {/* Real-World Deployment with Claude */}
+          <div className="bg-[#0d0d14] border border-violet-500/20 rounded-2xl p-6 md:p-8">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center flex-shrink-0">
+                <Terminal className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-white font-bold text-lg mb-2">Real-World Deployment with Claude</h4>
+                <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                  Every student builds and deploys systems using Claude, creating a verifiable portfolio of AI implementations.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {[
+                    'Proof of applied AI training',
+                    'A working system portfolio',
+                    'Contribution to the Anthropic ecosystem',
+                  ].map((point) => (
+                    <div key={point} className="flex items-center gap-2 text-sm text-gray-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
+                      {point}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </LayerSection>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 py-12 px-4 sm:px-6 lg:px-8 mt-12 relative z-30">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">N</span>
+      {/* ── SECTION 7: Community Alignment ── */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-cyan-300 text-xs font-medium uppercase tracking-widest mb-6">
+            Community
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            Built for the AI Builder Community
+          </h2>
+          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-6 leading-relaxed">
+            NeuraFlow Academy operates as a live training ecosystem. Students build, share, and iterate within a community aligned with the future of AI development.
+          </p>
+          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
+            By training on Anthropic tools, the Academy contributes to:
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {[
+              'AI education and adoption',
+              'Real-world use case development',
+              'Community-driven intelligence systems',
+            ].map((point) => (
+              <div key={point} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/8 bg-white/3 text-sm text-gray-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
+                {point}
               </div>
-              <span className="text-white font-semibold">NeuraFlow Academy</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 8: Enrolment ── */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="rounded-2xl border border-violet-500/25 bg-gradient-to-b from-violet-900/20 to-[#0a0a2f] p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Join the Next Cohort.</h2>
+            <p className="text-gray-400 text-sm leading-relaxed mb-2">
+              NeuraFlow Academy runs in live cohorts so you build alongside other operators — and get direct feedback on your systems.
+            </p>
+            <p className="text-gray-500 text-xs mb-8 italic">
+              All training is conducted using Claude and Anthropic tools, ensuring hands-on experience with real AI systems.
+            </p>
+            <button
+              onClick={onBookingClick}
+              className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white px-10 py-4 rounded-xl font-bold transition-all flex items-center gap-2 mx-auto shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95"
+            >
+              Reserve Your Spot <ArrowRight className="w-4 h-4" />
+            </button>
+            <p className="text-gray-600 text-xs mt-4">Limited cohort size. Applications reviewed within 24 hours.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/5 py-12 px-4 sm:px-6 lg:px-8 mt-4 relative z-30">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">N</span>
+                </div>
+                <span className="text-white font-semibold">NeuraFlow Academy</span>
+              </div>
+              <p className="text-gray-600 text-xs leading-relaxed">
+                Built using Anthropic AI Tools (Claude)
+              </p>
             </div>
 
             <div className="text-center">
@@ -471,18 +633,10 @@ export default function Academy({ onBookingClick }: AcademyProps) {
                 Layers
               </h4>
               <div className="flex flex-wrap justify-center gap-3 text-xs text-gray-400">
-                <a href="#foundations" className="hover:text-white transition-colors">
-                  Layer 1: Foundations
-                </a>
-                <a href="#intelligence" className="hover:text-white transition-colors">
-                  Layer 2: Intelligence
-                </a>
-                <a href="#application" className="hover:text-white transition-colors">
-                  Layer 3: Application
-                </a>
-                <a href="#capstone" className="hover:text-white transition-colors">
-                  Final Layer: Capstone
-                </a>
+                <a href="#foundations" className="hover:text-white transition-colors">Layer 1: Foundations</a>
+                <a href="#intelligence" className="hover:text-white transition-colors">Layer 2: Intelligence</a>
+                <a href="#application" className="hover:text-white transition-colors">Layer 3: Application</a>
+                <a href="#capstone" className="hover:text-white transition-colors">Final Layer: Capstone</a>
               </div>
             </div>
 
@@ -492,15 +646,9 @@ export default function Academy({ onBookingClick }: AcademyProps) {
                 Back to Growth Systems
               </h4>
               <div className="space-y-1 text-xs text-gray-400">
-                <a href="/" className="block hover:text-white transition-colors">
-                  Home
-                </a>
-                <a href="/#two-engines" className="block hover:text-white transition-colors">
-                  Services: The Two Growth Engines
-                </a>
-                <a href="/#system-architecture" className="block hover:text-white transition-colors">
-                  System Architecture
-                </a>
+                <a href="/" className="block hover:text-white transition-colors">Home</a>
+                <a href="/#two-engines" className="block hover:text-white transition-colors">Services: The Two Growth Engines</a>
+                <a href="/#system-architecture" className="block hover:text-white transition-colors">System Architecture</a>
               </div>
             </div>
           </div>
