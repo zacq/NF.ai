@@ -10,19 +10,18 @@ export default function TwoGrowthEngines() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/10 text-violet-300 text-xs font-medium uppercase tracking-widest mb-4">
             The Two Growth Engines
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            NeuraFlow installs automated
-            <br />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+            NeuraFlow installs automated{" "}
             <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">growth infrastructure</span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+          <p className="text-white/50 text-base sm:text-lg max-w-2xl mx-auto">
             Everything we build falls into two core systems that work together to capture, nurture, and convert customers 24/7.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Left: Attention Infrastructure */}
-          <div className="group relative p-8 rounded-2xl border border-violet-500/30 bg-gradient-to-b from-violet-900/30 to-[#0a0a2f] hover:border-violet-500/50 transition-all duration-300">
+          <div className="group relative p-5 sm:p-8 rounded-2xl border border-violet-500/30 bg-gradient-to-b from-violet-900/30 to-[#0a0a2f] hover:border-violet-500/50 transition-all duration-300">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 text-white text-xs font-semibold">
               Attention Infrastructure
             </div>
@@ -69,7 +68,7 @@ export default function TwoGrowthEngines() {
           </div>
 
           {/* Right: AI Sales System */}
-          <div className="group relative p-8 rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-cyan-900/20 to-[#0a1a2f] hover:border-cyan-500/50 transition-all duration-300">
+          <div className="group relative p-5 sm:p-8 rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-cyan-900/20 to-[#0a1a2f] hover:border-cyan-500/50 transition-all duration-300">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-xs font-semibold">
               AI Sales System (5-Stage)
             </div>

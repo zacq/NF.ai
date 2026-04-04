@@ -53,11 +53,11 @@ export default function FloatingChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 flex flex-col items-end gap-3">
       {/* Chat panel */}
       {open && (
-        <div className="w-[340px] max-w-[92vw] rounded-2xl border border-white/10 bg-[#0d0d1f] shadow-2xl shadow-black/60 overflow-hidden flex flex-col"
-          style={{ maxHeight: "520px" }}>
+        <div className="w-[min(340px,calc(100vw-2rem))] rounded-2xl border border-white/10 bg-[#0d0d1f] shadow-2xl shadow-black/60 overflow-hidden flex flex-col"
+          style={{ maxHeight: "min(520px, calc(100svh - 100px))" }}>
 
           {/* Header */}
           <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-violet-700 to-cyan-600 shrink-0">

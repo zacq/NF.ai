@@ -9,11 +9,8 @@ export default function SalesPricingModal() {
       setIsOpen(true);
       document.body.style.overflow = 'hidden';
     };
-
     window.addEventListener('open-sales-modal', handleOpen);
-    return () => {
-      window.removeEventListener('open-sales-modal', handleOpen);
-    };
+    return () => window.removeEventListener('open-sales-modal', handleOpen);
   }, []);
 
   const closeForm = () => {
@@ -23,223 +20,161 @@ export default function SalesPricingModal() {
 
   if (!isOpen) return null;
 
+  const cards = [
+    {
+      icon: <Users className="w-5 h-5" />,
+      iconBg: "bg-emerald-500/20 text-emerald-400",
+      badge: "Most Popular",
+      badgeColor: "text-emerald-400",
+      hover: "hover:border-emerald-500/30",
+      title: "AI Lead Capture Engine",
+      desc: "Turn every website visitor into a tracked, nurtured, and monetized opportunity. Capture, qualify, and follow up automatically 24/7.",
+      features: [
+        "Smart AI sales agent + CRM integration",
+        "Automated email, SMS & WhatsApp follow-ups",
+        "Intelligent lead scoring system",
+        "Real-time pipeline dashboard",
+        "Conversion optimization templates",
+      ],
+      checkColor: "text-emerald-500",
+      price: "$350",
+      priceColor: "text-emerald-400",
+    },
+    {
+      icon: <Settings className="w-5 h-5" />,
+      iconBg: "bg-pink-500/20 text-pink-400",
+      badge: "Advanced",
+      badgeColor: "text-pink-400",
+      hover: "hover:border-pink-500/30",
+      title: "AI Sales Automation Pro",
+      desc: "Build a complete multi-channel sales engine that nurtures cold prospects into booked calls and closed deals.",
+      features: [
+        "Multi-channel automation workflows",
+        "Personalized AI follow-up logic",
+        "Deal-stage pipeline architecture",
+        "Automated booking + reminders",
+        "Sales analytics & performance tracking",
+        "Plug-and-play workflow templates",
+      ],
+      checkColor: "text-pink-500",
+      price: "$500",
+      priceColor: "text-pink-400",
+    },
+    {
+      icon: <Rocket className="w-5 h-5" />,
+      iconBg: "bg-yellow-500/20 text-yellow-400",
+      badge: "Fast Implementation",
+      badgeColor: "text-yellow-400",
+      hover: "hover:border-yellow-500/30",
+      title: "AI Appointment Accelerator",
+      desc: "Deploy a high-converting AI qualification and booking system in days. Fill your calendar with ready-to-buy prospects.",
+      features: [
+        "AI qualification scripts",
+        "Automated scheduling & rescheduling",
+        "No-show reduction sequences",
+        "CRM & calendar integrations",
+        "Conversion-tested message flows",
+      ],
+      checkColor: "text-yellow-500",
+      price: "$200",
+      priceColor: "text-yellow-400",
+    },
+  ];
+
+  const bundleFeatures = [
+    "All 3 systems included",
+    "End-to-end sales infrastructure blueprint",
+    "Advanced CRM architecture templates",
+    "AI sales script vault",
+    "Lifetime updates",
+    "Private implementation group",
+    "Priority support",
+  ];
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-      <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
-        onClick={closeForm}
-      />
-      
-      <div className="relative w-full max-w-6xl bg-[#0d0d14] rounded-2xl border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh] animate-in fade-in zoom-in duration-300">
-        <button 
+    <div className="fixed inset-0 z-[100] flex items-start justify-center p-3 sm:p-4 overflow-y-auto">
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={closeForm} />
+
+      <div className="relative w-full max-w-4xl bg-[#0d0d14] rounded-2xl border border-white/10 shadow-2xl my-4 animate-in fade-in zoom-in-95 duration-300">
+        <button
           onClick={closeForm}
-          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-colors z-10"
+          className="absolute top-3 right-3 p-1.5 text-white/40 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-colors z-10"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
-        <div className="p-8 md:p-12">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 mb-4">
+        <div className="p-5 sm:p-8">
+          {/* Header */}
+          <div className="text-center mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-blue mb-1">
               Master AI Sales Systems
             </h2>
-            <p className="text-gray-400 text-lg">
-              Complete Revenue Engines for Modern Businesses
-            </p>
+            <p className="text-white/40 text-sm">Complete Revenue Engines for Modern Businesses</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 */}
-            <div className="bg-[#13131f] border border-white/5 rounded-xl p-8 hover:border-emerald-500/30 transition-colors flex flex-col">
-              <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                  <Users className="w-6 h-6" />
-                </div>
-                <span className="text-emerald-400 text-sm font-medium">Most Popular</span>
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">AI Lead Capture Engine</h3>
-              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                Turn every website visitor into a tracked, nurtured, and monetized opportunity. Capture, qualify, and follow up automatically 24/7.
-              </p>
-              <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-emerald-500 shrink-0" />
-                  <span>Smart AI sales agent + CRM integration</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-emerald-500 shrink-0" />
-                  <span>Automated email, SMS & WhatsApp follow-ups</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-emerald-500 shrink-0" />
-                  <span>Intelligent lead scoring system</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-emerald-500 shrink-0" />
-                  <span>Real-time pipeline dashboard</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-emerald-500 shrink-0" />
-                  <span>Conversion optimization templates</span>
-                </li>
-              </ul>
-              <div className="mt-auto">
-                <div className="text-3xl font-bold text-emerald-500 mb-4">$350</div>
-                <button className="text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center gap-2 group transition-colors">
-                  Enroll Now <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-[#13131f] border border-white/5 rounded-xl p-8 hover:border-pink-500/30 transition-colors flex flex-col">
-              <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400">
-                  <Settings className="w-6 h-6" />
-                </div>
-                <span className="text-pink-400 text-sm font-medium">Advanced</span>
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">AI Sales Automation Pro</h3>
-              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                Build a complete multi-channel sales engine that nurtures cold prospects into booked calls and closed deals without manual chasing.
-              </p>
-              <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-pink-500 shrink-0" />
-                  <span>Multi-channel automation workflows</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-pink-500 shrink-0" />
-                  <span>Personalized AI follow-up logic</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-pink-500 shrink-0" />
-                  <span>Deal-stage pipeline architecture</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-pink-500 shrink-0" />
-                  <span>Automated booking + reminders</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-pink-500 shrink-0" />
-                  <span>Sales analytics & performance tracking</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-pink-500 shrink-0" />
-                  <span>Plug-and-play workflow templates</span>
-                </li>
-              </ul>
-              <div className="mt-auto">
-                <div className="text-3xl font-bold text-pink-500 mb-4">$500</div>
-                <button className="text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center gap-2 group transition-colors">
-                  Enroll Now <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-[#13131f] border border-white/5 rounded-xl p-8 hover:border-yellow-500/30 transition-colors flex flex-col">
-              <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400">
-                  <Rocket className="w-6 h-6" />
-                </div>
-                <span className="text-yellow-400 text-sm font-medium">Fast Implementation</span>
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">AI Appointment Accelerator</h3>
-              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                Deploy a high-converting AI qualification and booking system in days, not months. Fill your calendar with ready-to-buy prospects.
-              </p>
-              <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-yellow-500 shrink-0" />
-                  <span>AI qualification scripts</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-yellow-500 shrink-0" />
-                  <span>Automated scheduling & rescheduling</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-yellow-500 shrink-0" />
-                  <span>No-show reduction sequences</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-yellow-500 shrink-0" />
-                  <span>CRM & calendar integrations</span>
-                </li>
-                <li className="flex items-start gap-3 text-sm text-gray-300">
-                  <Check className="w-5 h-5 text-yellow-500 shrink-0" />
-                  <span>Conversion-tested message flows</span>
-                </li>
-              </ul>
-              <div className="mt-auto">
-                <div className="text-3xl font-bold text-yellow-500 mb-4">$200</div>
-                <button className="text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center gap-2 group transition-colors">
-                  Enroll Now <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Complete AI Sales Mastery Section */}
-          <div className="mt-16 text-center">
-            <h2 className="text-3xl font-bold text-cyan-400 mb-8">Complete AI Sales Mastery</h2>
-            
-            <div className="relative bg-[#0d0d14] border border-cyan-500/30 rounded-3xl p-8 md:p-12 overflow-visible">
-              {/* Floating Sales Icon */}
-              <div className="absolute -top-8 left-1/2 -translate-x-1/2">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] border border-cyan-400/20">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                  </svg>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Full Bundle – The 24/7 Revenue Machine</h3>
-                <p className="text-gray-400 max-w-2xl mx-auto mb-10 text-sm md:text-base leading-relaxed">
-                  A fully automated acquisition, nurture, and closing system engineered to generate revenue continuously.
-                </p>
-
-                {/* Bundle Features List */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-12">
-                  {[
-                    "All 3 systems included",
-                    "End-to-end sales infrastructure blueprint",
-                    "Advanced CRM architecture templates",
-                    "AI sales script vault",
-                    "Lifetime updates",
-                    "Private implementation group",
-                    "Priority support"
-                  ].map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-4 text-left">
-                      <div className="w-2 h-2 rounded-full bg-cyan-500 shrink-0" />
-                      <span className="text-sm text-gray-200">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bundle Pricing Area */}
-                <div className="mb-8">
-                  <div className="flex items-center justify-center gap-4">
-                    <span className="text-5xl md:text-6xl font-bold text-white">$750</span>
-                    <span className="text-2xl text-gray-500 line-through">$850 Value</span>
+          {/* Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            {cards.map((c, i) => (
+              <div key={i} className={`bg-white/[0.04] border border-white/8 rounded-xl p-4 ${c.hover} transition-colors flex flex-col`}>
+                <div className="flex justify-between items-center mb-3">
+                  <div className={`w-9 h-9 rounded-lg ${c.iconBg} flex items-center justify-center`}>
+                    {c.icon}
                   </div>
-                  <p className="text-gray-400 mt-2">One-Time Payment</p>
+                  <span className={`${c.badgeColor} text-xs font-semibold`}>{c.badge}</span>
                 </div>
-
-                <button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-10 py-4 rounded-xl font-bold text-lg flex items-center gap-2 mx-auto transition-all shadow-lg shadow-cyan-500/20">
-                  Get Full Bundle <span className="text-xl">→</span>
-                </button>
+                <h3 className="text-base font-bold text-white mb-2 leading-snug">{c.title}</h3>
+                <p className="text-white/40 text-xs mb-3 leading-relaxed flex-1">{c.desc}</p>
+                <ul className="space-y-1.5 mb-4">
+                  {c.features.map((f, j) => (
+                    <li key={j} className="flex items-start gap-2 text-xs text-white/60">
+                      <Check className={`w-3.5 h-3.5 ${c.checkColor} shrink-0 mt-0.5`} />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto">
+                  <div className={`text-2xl font-bold ${c.priceColor} mb-2`}>{c.price}</div>
+                  <button className="text-brand-accent hover:text-brand-blue text-xs font-medium flex items-center gap-1 group transition-colors">
+                    Enroll Now <span className="group-hover:translate-x-0.5 transition-transform">→</span>
+                  </button>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
 
-          {/* Close button at the very bottom */}
-          <div className="mt-12 text-center pb-4">
-            <button 
-              onClick={closeForm}
-              className="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4"
-            >
+          {/* Bundle */}
+          <div className="relative bg-white/[0.03] border border-brand-accent/30 rounded-2xl p-5 sm:p-7 pt-10 text-center">
+            <div className="absolute -top-5 left-1/2 -translate-x-1/2">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-accent to-brand-blue flex items-center justify-center shadow-[0_0_20px_rgba(14,165,214,0.4)] border border-brand-accent/20">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+            </div>
+            <h3 className="text-lg sm:text-2xl font-bold text-white mb-2">Full Bundle — The 24/7 Revenue Machine</h3>
+            <p className="text-white/40 text-xs sm:text-sm max-w-xl mx-auto mb-5 leading-relaxed">
+              A fully automated acquisition, nurture, and closing system engineered to generate revenue continuously.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-2xl mx-auto mb-5">
+              {bundleFeatures.map((f, i) => (
+                <div key={i} className="flex items-center gap-2 bg-white/5 border border-white/8 rounded-lg px-3 py-2 text-left">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-accent shrink-0" />
+                  <span className="text-xs text-white/70">{f}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <span className="text-3xl sm:text-4xl font-bold text-white">$750</span>
+              <span className="text-lg text-white/30 line-through">$850</span>
+            </div>
+            <p className="text-white/30 text-xs mb-4">One-time payment</p>
+            <button className="bg-gradient-to-r from-brand-accent to-brand-blue hover:opacity-90 text-white px-7 py-3 rounded-xl font-bold text-sm inline-flex items-center gap-2 mx-auto transition-all shadow-lg shadow-brand-accent/20">
+              Get Full Bundle →
+            </button>
+          </div>
+
+          <div className="mt-5 text-center">
+            <button onClick={closeForm} className="text-white/25 hover:text-white/60 transition-colors text-xs underline underline-offset-4">
               Back to website
             </button>
           </div>

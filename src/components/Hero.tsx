@@ -110,7 +110,7 @@ export default function Hero() {
 
           {/* LEFT — Badge + Headline */}
           <div>
-            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8 animate-float">
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-5 animate-float">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
@@ -120,7 +120,7 @@ export default function Hero() {
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold leading-[1.08] text-white tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold leading-[1.1] text-white tracking-tight">
               The Sovereign <br />
               <span className="bg-gradient-to-r from-brand-blue via-brand-gold to-brand-accent bg-clip-text text-transparent">
                 Growth Infrastructure.
@@ -130,7 +130,7 @@ export default function Hero() {
 
           {/* RIGHT — Description */}
           <div className="flex items-center">
-            <p className="text-xl sm:text-2xl text-white/60 leading-relaxed font-light">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 leading-relaxed font-light">
               NeuraFlow installs elite-tier AI attention engines and automated sales systems.{" "}
               <span className="text-white/80 font-medium">
                 We don't just market — we build the machine that generates your future.
@@ -143,14 +143,14 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-start gap-4 mb-12">
           <a
             href="#book-call"
-            className="group relative w-full sm:w-auto px-10 py-5 rounded-2xl bg-white text-brand-navy font-bold text-base overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)] text-center"
+            className="group relative w-full sm:w-auto px-7 py-4 rounded-2xl bg-white text-brand-navy font-bold text-sm sm:text-base overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)] text-center"
           >
             <span className="relative z-10">Initiate Strategy Call</span>
             <div className="absolute inset-0 bg-gradient-to-r from-brand-blue to-brand-accent opacity-0 group-hover:opacity-10 transition-opacity" />
           </a>
           <a
             href="#system-architecture"
-            className="w-full sm:w-auto px-10 py-5 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-xl text-white font-bold text-base hover:bg-white/10 transition-all duration-300 hover:border-white/40 text-center"
+            className="w-full sm:w-auto px-7 py-4 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-xl text-white font-bold text-sm sm:text-base hover:bg-white/10 transition-all duration-300 hover:border-white/40 text-center"
           >
             Explore the Architecture
           </a>

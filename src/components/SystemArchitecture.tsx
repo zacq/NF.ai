@@ -70,7 +70,7 @@ export default function SystemArchitecture() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-accent/20 bg-brand-accent/10 text-brand-accent text-[10px] font-black uppercase tracking-[0.3em] mb-5">
             Structural Intelligence
           </div>
-          <h2 className="text-4xl md:text-6xl font-display font-extrabold text-white mb-5 tracking-tighter">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-extrabold text-white mb-5 tracking-tighter">
             The Engine of{" "}
             <span className="bg-gradient-to-r from-brand-blue via-brand-gold to-brand-accent bg-clip-text text-transparent">
               Sovereignty.
@@ -136,10 +136,10 @@ export default function SystemArchitecture() {
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/60 to-transparent" />
 
           <div className="relative z-10 text-center px-8 py-16 md:py-20">
-            <h3 className="text-3xl md:text-5xl font-display font-extrabold text-white mb-3 tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-display font-extrabold text-white mb-3 tracking-tight">
               Ready to Decentralize
             </h3>
-            <h3 className="text-3xl md:text-5xl font-display font-extrabold mb-6 tracking-tight bg-gradient-to-r from-brand-blue via-brand-gold to-brand-accent bg-clip-text text-transparent">
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-display font-extrabold mb-4 tracking-tight bg-gradient-to-r from-brand-blue via-brand-gold to-brand-accent bg-clip-text text-transparent">
               Your Growth?
             </h3>
             <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
@@ -150,7 +150,7 @@ export default function SystemArchitecture() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
               <a
                 href="#book-call"
-                className="group px-10 py-4 rounded-2xl bg-gradient-to-r from-brand-blue to-brand-accent text-white font-black text-sm uppercase tracking-widest transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(27,110,194,0.4)] active:scale-95 inline-flex items-center gap-3"
+                className="group w-full sm:w-auto px-8 py-3 rounded-2xl bg-gradient-to-r from-brand-blue to-brand-accent text-white font-black text-sm uppercase tracking-widest transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(27,110,194,0.4)] active:scale-95 inline-flex items-center justify-center gap-3"
               >
                 Start Implementation
                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,7 +159,7 @@ export default function SystemArchitecture() {
               </a>
               <a
                 href="#book-call"
-                className="px-10 py-4 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:border-white/25 transition-all duration-300"
+                className="w-full sm:w-auto px-8 py-3 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:border-white/25 transition-all duration-300"
               >
                 Book a Strategy Call
               </a>

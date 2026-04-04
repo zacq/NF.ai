@@ -140,7 +140,7 @@ export default function TrustedTeams() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-accent/20 bg-brand-accent/10 text-brand-accent text-xs font-medium uppercase tracking-widest mb-4">
             Trusted Teams
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             Performance-driven results for
             <br />
             <span className="bg-gradient-to-r from-brand-accent to-brand-blue bg-clip-text text-transparent">innovative companies</span>
