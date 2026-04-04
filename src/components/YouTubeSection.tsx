@@ -22,7 +22,7 @@ export default function YouTubeSection() {
 
   // Build src with autoplay only when visible
   const src = isVisible
-    ? "https://www.youtube.com/embed?listType=user_uploads&list=Neuralab-v6b&autoplay=1&mute=1&rel=0"
+    ? "https://www.youtube.com/embed/tpqnjngREQU?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
     : "";
 
   return (
@@ -44,7 +44,7 @@ export default function YouTubeSection() {
               key={src}
               className="w-full h-full"
               src={src}
-              title="Neuralab YouTube player"
+              title="NeuraFlow — We Replaced Our Entire Sales Team With AI"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
