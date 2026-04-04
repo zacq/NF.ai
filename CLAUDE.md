@@ -71,7 +71,7 @@ window.dispatchEvent(new CustomEvent('open-sales-modal'));
 | Airtable | `BookingModal.tsx` | Lead form submissions. Env vars: `VITE_AIRTABLE_TOKEN`, `VITE_AIRTABLE_LEADS_BASE`, `VITE_AIRTABLE_LEADS_TABLE` |
 | Airtable | _(paid records)_ | `VITE_AIRTABLE_PAID_BASE`, `VITE_AIRTABLE_PAID_TABLE` |
 | Railway webhook | `FloatingChatWidget.tsx` | Nova AI chat. URL hardcoded as `WEBHOOK_URL` constant (not an env var) |
-| YouTube embed | `YouTubeSection.tsx` | Autoplay playlist from `@Neuralab-v6b` channel |
+| YouTube embed | `YouTubeSection.tsx` | Autoplays video `tpqnjngREQU` (muted) when section scrolls into view via IntersectionObserver |
 | WhatsApp | `Footer.tsx`, `Academy.tsx` | Direct link to `+254757485677` |
 
 ## Environment variables
