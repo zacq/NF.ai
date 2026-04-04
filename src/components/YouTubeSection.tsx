@@ -26,7 +26,7 @@ export default function YouTubeSection() {
     : "";
 
   return (
-    <section ref={sectionRef} className="py-20 border-t border-white/5 bg-[#050510]" aria-labelledby="neuraflow-youtube-heading">
+    <section ref={sectionRef} className="py-12 border-t border-white/5 bg-brand-navy" aria-labelledby="neuraflow-youtube-heading">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
         <h2
           id="neuraflow-youtube-heading"

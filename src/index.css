@@ -2,22 +2,24 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui;
-  --font-display: "Syne", sans-serif;
-  
-  --color-brand-bg: #030308;
-  --color-brand-primary: #8b5cf6;
-  --color-brand-secondary: #06b6d4;
-  --color-brand-accent: #f0abfc;
+  --font-display: "Playfair Display", Georgia, serif;
+
+  --color-brand-navy:   #0D1F35;
+  --color-brand-blue:   #1B6EC2;
+  --color-brand-accent: #0EA5D6;
+  --color-brand-gold:   #D4AF37;
+  --color-brand-light:  #E8F4FD;
 }
 
 @layer base {
   body {
-    @apply font-sans bg-brand-bg text-white/90 antialiased;
+    @apply font-sans bg-brand-navy text-white/90 antialiased;
     letter-spacing: -0.01em;
   }
-  
-  h1, h2, h3, h4, .font-display {
-    @apply font-display font-bold tracking-tight text-white;
+
+  h1, h2, h3, h4, h5, .font-display {
+    @apply font-display font-bold text-white;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -65,29 +67,40 @@
   animation: pulse-soft 8s ease-in-out infinite;
 }
 
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
 /* ============================================================
    LIGHT MODE — comprehensive overrides
    ============================================================ */
 html.light {
-  --color-brand-bg: #f0f0ff;
-  --color-brand-primary: #6d28d9;
-  --color-brand-secondary: #0369a1;
-  --color-brand-accent: #a21caf;
+  --color-brand-navy:   #E8F4FD;
+  --color-brand-blue:   #1355A0;
+  --color-brand-accent: #0887B0;
+  --color-brand-gold:   #B8860B;
+  --color-brand-light:  #FFFFFF;
 }
 
 /* Base */
 html.light body {
-  background-color: #f0f0ff;
+  background-color: #E8F4FD;
   color: #0f0f1a;
 }
 
 /* ── Text ─────────────────────────────────────────────────── */
-/* All text-white variants → near-black (opacity hierarchy preserved via our grading) */
 html.light [class*="text-white"] {
   color: #0f0f1a !important;
 }
 
-/* gray-XXX text — make fully dark */
 html.light [class*="text-gray-1"],
 html.light [class*="text-gray-2"],
 html.light [class*="text-gray-3"],
@@ -99,29 +112,23 @@ html.light [class*="text-gray-6"] {
   color: #6b7280 !important;
 }
 
-/* Keep gradient text visible (bg-clip-text text-transparent) — no override needed */
-
 /* ── Backgrounds ───────────────────────────────────────────── */
-/* Page wrapper and sections with hardcoded dark hex values */
 html.light .min-h-screen,
-html.light [class*="bg-brand-bg"] {
-  background-color: #f0f0ff !important;
+html.light [class*="bg-brand-navy"] {
+  background-color: #E8F4FD !important;
 }
 
-/* Hardcoded hex dark backgrounds: #05, #0a, #0d, #03 etc. */
 html.light [class*="bg-[#0"] {
-  background-color: #e8e8f8 !important;
+  background-color: #d0e8f8 !important;
 }
 
-/* Subtle white overlay cards (bg-white/3, bg-white/5 etc.) → subtle dark overlay */
 html.light [class*="bg-white/"] {
   background-color: rgba(10, 10, 40, 0.05) !important;
 }
 
-/* Gradient card panels that start from dark violet/cyan — soften them */
 html.light [class*="from-violet-900"],
 html.light [class*="from-cyan-900"] {
-  --tw-gradient-from: rgba(109, 40, 217, 0.07) !important;
+  --tw-gradient-from: rgba(27, 110, 194, 0.07) !important;
 }
 html.light [class*="to-\[#0a0a2f\]"],
 html.light [class*="to-\[#0a1a2f\]"],
@@ -130,9 +137,9 @@ html.light [class*="to-\[#0a0a10\]"] {
 }
 
 /* Navbar backdrop */
-html.light nav[class*="bg-brand-bg"],
+html.light nav[class*="bg-brand-navy"],
 html.light nav[class*="bg-[#"] {
-  background-color: rgba(240, 240, 255, 0.85) !important;
+  background-color: rgba(232, 244, 253, 0.85) !important;
 }
 
 /* Canvas — dim so particles aren't glaring */
@@ -148,43 +155,38 @@ html.light [class*="border-white/"] {
 
 /* ── Card / surface areas ──────────────────────────────────── */
 html.light [class*="backdrop-blur"] {
-  background-color: rgba(240, 240, 255, 0.7) !important;
+  background-color: rgba(232, 244, 253, 0.7) !important;
 }
 
 /* ── Buttons ───────────────────────────────────────────────── */
-/* Solid white buttons (e.g. "Initiate Strategy Call") — invisible on light bg.
-   Flip to brand-primary so they remain prominent. */
 html.light a[class*="bg-white"]:not([class*="bg-white/"]),
 html.light button[class*="bg-white"]:not([class*="bg-white/"]) {
-  background-color: var(--color-brand-primary) !important;
+  background-color: var(--color-brand-blue) !important;
   color: #ffffff !important;
-  box-shadow: 0 0 20px rgba(109, 40, 217, 0.25) !important;
+  box-shadow: 0 0 20px rgba(27, 110, 194, 0.25) !important;
 }
 
-/* text-brand-bg used as button text color — in light mode brand-bg is light, so text disappears.
-   Force it to white when inside a solid button, or dark otherwise. */
-html.light [class*="text-brand-bg"] {
+/* text-brand-navy used as button text color — force white inside solid buttons */
+html.light [class*="text-brand-navy"] {
   color: #ffffff !important;
 }
 
-/* Ghost / outline buttons — give them a visible brand-tinted border + subtle bg */
+/* Ghost / outline buttons */
 html.light a[class*="border-white/20"],
 html.light button[class*="border-white/20"],
 html.light a[class*="border-white/15"],
 html.light button[class*="border-white/15"] {
-  border-color: rgba(109, 40, 217, 0.35) !important;
-  background-color: rgba(109, 40, 217, 0.06) !important;
+  border-color: rgba(27, 110, 194, 0.35) !important;
+  background-color: rgba(27, 110, 194, 0.06) !important;
   color: #0f0f1a !important;
 }
 
-/* Navbar "Consult" button — brand-primary tint, stay readable */
-html.light button[class*="bg-brand-primary/10"] {
-  background-color: rgba(109, 40, 217, 0.12) !important;
-  border-color: rgba(109, 40, 217, 0.4) !important;
+/* Navbar "Consult" button */
+html.light button[class*="bg-brand-blue/10"] {
+  background-color: rgba(27, 110, 194, 0.12) !important;
+  border-color: rgba(27, 110, 194, 0.4) !important;
   color: #0f0f1a !important;
 }
-
-/* Keep gradient buttons (from-brand-primary, from-violet-600 etc.) as-is — they're already coloured */
 
 /* ── Placeholder text ──────────────────────────────────────── */
 html.light ::placeholder {
@@ -193,7 +195,7 @@ html.light ::placeholder {
 
 /* Scrollbar track */
 html.light::-webkit-scrollbar-track {
-  background: #e8e8f8;
+  background: #d0e8f8;
 }
 
 * {
@@ -201,7 +203,8 @@ html.light::-webkit-scrollbar-track {
 }
 
 ::selection {
-  @apply bg-brand-primary/30 text-white;
+  background: rgba(27, 110, 194, 0.25);
+  color: inherit;
 }
 
 ::-webkit-scrollbar {
@@ -209,10 +212,10 @@ html.light::-webkit-scrollbar-track {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-brand-bg;
+  @apply bg-brand-navy;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, var(--color-brand-primary), var(--color-brand-secondary));
+  background: linear-gradient(to bottom, var(--color-brand-blue), var(--color-brand-accent));
   border-radius: 10px;
 }

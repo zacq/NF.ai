@@ -50,7 +50,7 @@ export default function Hero() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(139,92,246,${0.15 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(27,110,194,${0.15 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -61,8 +61,8 @@ export default function Hero() {
       nodes.forEach((n) => {
         ctx.beginPath();
         const gradient = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2);
-        gradient.addColorStop(0, "rgba(139,92,246,0.8)");
-        gradient.addColorStop(1, "rgba(6,182,212,0)");
+        gradient.addColorStop(0, "rgba(27,110,194,0.8)");
+        gradient.addColorStop(1, "rgba(14,165,214,0)");
         ctx.fillStyle = gradient;
         ctx.arc(n.x, n.y, n.r * 2, 0, Math.PI * 2);
         ctx.fill();
@@ -90,17 +90,17 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-10 bg-brand-bg">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-10 bg-brand-navy">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-40 mix-blend-screen" />
 
       {/* Atmospheric Glows */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-primary/20 rounded-full blur-[120px] animate-pulse-soft" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-secondary/15 rounded-full blur-[120px] animate-pulse-soft" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.08)_0%,transparent_70%)]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/20 rounded-full blur-[120px] animate-pulse-soft" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-accent/15 rounded-full blur-[120px] animate-pulse-soft" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(27,110,194,0.08)_0%,transparent_70%)]" />
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-bg to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-navy to-transparent z-10" />
 
       {/* Main content */}
       <div className="relative z-20 px-6 max-w-7xl mx-auto w-full">
@@ -122,7 +122,7 @@ export default function Hero() {
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold leading-[1.08] text-white tracking-tight">
               The Sovereign <br />
-              <span className="bg-gradient-to-r from-brand-primary via-brand-accent to-brand-secondary bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-brand-blue via-brand-gold to-brand-accent bg-clip-text text-transparent">
                 Growth Infrastructure.
               </span>
             </h1>
@@ -143,10 +143,10 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-start gap-4 mb-12">
           <a
             href="#book-call"
-            className="group relative w-full sm:w-auto px-10 py-5 rounded-2xl bg-white text-brand-bg font-bold text-base overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)] text-center"
+            className="group relative w-full sm:w-auto px-10 py-5 rounded-2xl bg-white text-brand-navy font-bold text-base overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)] text-center"
           >
             <span className="relative z-10">Initiate Strategy Call</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-primary to-brand-secondary opacity-0 group-hover:opacity-10 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-blue to-brand-accent opacity-0 group-hover:opacity-10 transition-opacity" />
           </a>
           <a
             href="#system-architecture"
@@ -163,9 +163,9 @@ export default function Hero() {
           </p>
           <div className="relative overflow-hidden">
             {/* Left fade */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-brand-bg to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-brand-navy to-transparent z-10 pointer-events-none" />
             {/* Right fade */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-brand-bg to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-brand-navy to-transparent z-10 pointer-events-none" />
 
             <div className="animate-marquee-ltr flex gap-10 items-center" style={{ width: "max-content" }}>
               {partnerItems.map((p, i) => (
@@ -173,7 +173,7 @@ export default function Hero() {
                   key={i}
                   className="flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors duration-300 select-none whitespace-nowrap"
                 >
-                  <span className="text-brand-primary/60 text-sm font-bold">{p.icon}</span>
+                  <span className="text-brand-blue/60 text-sm font-bold">{p.icon}</span>
                   <span className="text-sm font-semibold tracking-wide">{p.name}</span>
                 </div>
               ))}

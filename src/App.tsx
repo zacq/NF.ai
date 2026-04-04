@@ -91,7 +91,7 @@ export function App() {
       {isAcademy ? (
         <Academy onBookingClick={openBooking} />
       ) : (
-        <div className="min-h-screen bg-[#050510] text-white overflow-x-hidden">
+        <div className="min-h-screen bg-brand-navy text-white overflow-x-hidden">
           <Navbar scrolled={scrolled} onBookingClick={openBooking} isDark={isDark} onToggleTheme={toggleTheme} />
           <Hero />
           <TwoGrowthEngines />

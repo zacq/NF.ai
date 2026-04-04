@@ -1,12 +1,12 @@
 export default function TwoGrowthEngines() {
   return (
-    <section id="two-engines" className="py-28 relative overflow-hidden">
+    <section id="two-engines" className="py-14 relative overflow-hidden">
       {/* Background gradients */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 100% 60% at 50% 50%, rgba(109,40,217,0.06) 0%, transparent 70%)" }} />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/10 text-violet-300 text-xs font-medium uppercase tracking-widest mb-4">
             The Two Growth Engines
           </div>
@@ -119,7 +119,7 @@ export default function TwoGrowthEngines() {
         </div>
 
         {/* What You Really Get */}
-        <div className="mt-20">
+        <div className="mt-12">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/50 text-xs font-medium uppercase tracking-widest mb-3">
               What You Really Get
@@ -185,7 +185,7 @@ export default function TwoGrowthEngines() {
         </div>
 
         {/* Closing Statement */}
-        <div className="mt-14 text-center border-t border-white/5 pt-10">
+        <div className="mt-8 text-center border-t border-white/5 pt-6">
           <p className="text-white/40 text-base max-w-3xl mx-auto italic leading-relaxed">
             "All systems integrate seamlessly. Attention Infrastructure fuels the Traffic stage, feeding the AI Sales System with qualified leads."
           </p>

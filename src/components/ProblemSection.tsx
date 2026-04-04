@@ -33,11 +33,11 @@ const rows = [
 
 export default function ProblemSection() {
   return (
-    <section className="py-28 relative overflow-hidden">
+    <section className="py-14 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 100% 60% at 50% 50%, rgba(109,40,217,0.07) 0%, transparent 70%)" }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-fuchsia-500/20 bg-fuchsia-500/10 text-fuchsia-300 text-xs font-medium uppercase tracking-widest mb-4">
             The Problem
           </div>

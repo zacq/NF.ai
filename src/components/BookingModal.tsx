@@ -99,7 +99,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl bg-[#0a0a1a]/90 border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
+        className="relative w-full max-w-2xl bg-[#0a0a1a]/90 border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -111,7 +111,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="p-8 md:p-12">
+        <div className="p-6 md:p-8 overflow-y-auto flex-1">
           {/* Success state */}
           {status === 'success' && (
             <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -124,18 +124,18 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
           {/* Form */}
           {status !== 'success' && (
             <>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-white mb-4">Request a Callback</h2>
-            <p className="text-white/60 max-w-lg mx-auto">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-white mb-2">Request a Callback</h2>
+            <p className="text-white/60 max-w-lg mx-auto text-sm">
               Schedule a free consultation to discover how AI automation can transform your workflows, increase efficiency, and drive growth.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
               {/* First Name */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white/80">First Name *</label>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-white/70">First Name *</label>
                 <input
                   required
                   type="text"
@@ -143,13 +143,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   placeholder="John"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all"
                 />
               </div>
 
               {/* Last Name */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white/80">Last Name *</label>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-white/70">Last Name *</label>
                 <input
                   required
                   type="text"
@@ -157,13 +157,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   placeholder="Doe"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all"
                 />
               </div>
 
               {/* Company Name */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white/80">Company Name *</label>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-white/70">Company Name *</label>
                 <input
                   required
                   type="text"
@@ -171,13 +171,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   placeholder="Acme Inc."
                   value={formData.companyName}
                   onChange={handleChange}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all"
                 />
               </div>
 
               {/* Phone Number */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white/80">Phone Number *</label>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-white/70">Phone Number *</label>
                 <input
                   required
                   type="tel"
@@ -185,14 +185,14 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   placeholder="+254 712 345 678"
                   value={formData.phoneNumber}
                   onChange={handleChange}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all"
                 />
               </div>
             </div>
 
             {/* Email Address */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Email Address *</label>
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-white/70">Email Address *</label>
               <input
                 required
                 type="email"
@@ -200,14 +200,14 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                 placeholder="john.doe@example.com"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all"
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-3">
               {/* Preferred Date */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white/80">Preferred Date *</label>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-white/70">Preferred Date *</label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                   <input
@@ -216,14 +216,14 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                     name="date"
                     value={formData.date}
                     onChange={handleChange}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all [color-scheme:dark]"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all [color-scheme:dark]"
                   />
                 </div>
               </div>
 
               {/* Preferred Time */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white/80">Preferred Time *</label>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-white/70">Preferred Time *</label>
                 <div className="relative">
                   <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                   <select
@@ -231,7 +231,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                     name="time"
                     value={formData.time}
                     onChange={handleChange}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all appearance-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-blue/50 transition-all appearance-none"
                   >
                     <option value="" disabled className="bg-[#0a0a1a]">Select time</option>
                     <option value="morning" className="bg-[#0a0a1a]">Morning (9 AM - 12 PM)</option>
@@ -252,7 +252,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="w-full bg-violet-500 hover:bg-violet-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl shadow-lg shadow-violet-500/20 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full bg-brand-blue hover:bg-brand-blue/90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl shadow-lg shadow-brand-blue/20 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
             >
               {status === 'loading' ? (
                 <><Loader2 className="w-5 h-5 animate-spin" /> Sending...</>

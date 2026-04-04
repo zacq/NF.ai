@@ -10,69 +10,77 @@ npm run build      # production build → dist/index.html (single inlined file)
 npm run preview    # serve the dist build locally
 ```
 
-There is no lint script and no test suite. TypeScript type-checking happens implicitly during `vite build`. Always run `npm run build` before committing to catch type errors.
+No lint script or test suite. TypeScript type-checking happens implicitly during `vite build`. Always run `npm run build` before committing to catch type errors.
 
 ## Architecture
 
 ### Single-file output
-`vite-plugin-singlefile` inlines all JS and CSS into a single `dist/index.html`. This is intentional for Netlify deployment (see `netlify.toml`: publish = `dist`). Do not introduce dynamic imports or code-splitting — they will break the single-file output.
+`vite-plugin-singlefile` inlines all JS and CSS into a single `dist/index.html`. This is intentional for Netlify deployment (`netlify.toml`: publish = `dist`). Do not introduce dynamic imports or code-splitting — they break the single-file output.
 
 ### Routing
-There is no React Router. Navigation is hash-based and manual:
-- `/` or `/#` → main homepage (`App.tsx`)
-- `/#/academy` → Academy page
+No React Router. Navigation is hash-based:
+- `/` or `/#` → main homepage
+- `/#/academy` or `#academy` → Academy page (full-page replacement, **no** Navbar/Footer wrapper)
 
-`App.tsx` reads `window.location.hash` and a `hashchange` listener to switch between rendering `<Academy>` and the main homepage layout. All other "pages" (Features, HowItWorks, Pricing, etc.) exist as components but are **not currently mounted** in `App.tsx` — they are legacy/unused.
+`App.tsx` reads `window.location.hash` on mount and a `hashchange` listener to switch between `<Academy>` and the homepage layout.
+
+**Active homepage section render order** (top → bottom):
+`Navbar` → `Hero` → `TwoGrowthEngines` → `TrustedTeams` → `ProblemSection` → `SystemArchitecture` → `YouTubeSection` → `Footer` → `FloatingChatWidget`
+
+`Features`, `HowItWorks`, `Pricing`, `Integrations`, `Testimonials`, `FAQ`, `LogoStrip` exist as components but are **not mounted** in `App.tsx` — legacy/unused.
 
 ### Modal system
-Three modals exist and are always mounted at the App root:
-- `BookingModal` — main lead capture form, submits to Airtable
-- `PricingModal` — Attention Infrastructure pricing details
-- `SalesPricingModal` — AI Sales System pricing details
+Three modals are always mounted at the App root:
+- `BookingModal` — lead capture form (props-controlled via `isModalOpen` state in `App.tsx`)
+- `PricingModal` — Attention Infrastructure pricing (self-managed: listens for its own window event internally)
+- `SalesPricingModal` — AI Sales System pricing (self-managed: listens for its own window event internally)
 
-Modals are opened via **custom window events** (not props/context), so any component can trigger them without prop drilling:
+Any component opens modals via custom window events:
 ```ts
 window.dispatchEvent(new CustomEvent('open-booking-modal'));
 window.dispatchEvent(new CustomEvent('open-pricing-modal'));
 window.dispatchEvent(new CustomEvent('open-sales-modal'));
 ```
 
-`App.tsx` also intercepts clicks on `<a>` and `<button>` elements whose text matches a hardcoded list of booking trigger phrases (e.g. "Initiate Strategy Call", "Start Implementation") and opens the booking modal. Add new trigger phrases to the `bookingTriggers` array in `App.tsx` when adding CTAs.
+`App.tsx` also intercepts clicks on `<a>` and `<button>` whose text matches the `bookingTriggers` array and opens the booking modal. Add new CTA phrases to that array when adding new booking CTAs.
 
 ### Theme (light/dark mode)
-- Dark is the default. Light mode applies the `html.light` class on `<html>`.
-- Preference is saved to `localStorage` under key `"nf-theme"`.
-- The `html.light` CSS block in `src/index.css` provides all overrides — it uses `[class*="text-white"]`, `[class*="bg-[#0"]`, etc. to override Tailwind utilities globally. Extend this block when adding new dark-specific styles that won't automatically invert.
-- `isDark` state and `toggleTheme` live in `App.tsx` and are passed as props to `Navbar`.
+- Dark is default. Light mode applies the `html.light` class on `<html>`.
+- Preference saved to `localStorage` key `"nf-theme"`.
+- `isDark` state and `toggleTheme` live in `App.tsx`, passed as props to `Navbar`.
+- The `html.light` block in `src/index.css` uses attribute selectors (`[class*="text-white"]`, `[class*="bg-[#0"]`, etc.) to override Tailwind utilities globally without touching component markup. Extend this block when adding new dark-specific styles that won't automatically invert.
 
 ### Styling
-- Tailwind CSS v4 via `@tailwindcss/vite` (no `tailwind.config.js` — configured in `src/index.css` via `@theme`).
-- Brand tokens defined in `@theme`: `--color-brand-bg`, `--color-brand-primary` (#8b5cf6 violet), `--color-brand-secondary` (#06b6d4 cyan), `--color-brand-accent` (#f0abfc magenta).
-- Display font: Syne. Body font: Inter (loaded via CDN in `index.html`).
-- Custom animations in `index.css`: `animate-marquee` (RTL scroll), `animate-marquee-ltr` (LTR scroll), `animate-float`, `animate-pulse-soft`.
-- `src/utils/cn.ts` exports a `cn()` helper (clsx + tailwind-merge) — use it when conditionally composing class names.
-- Path alias `@/` maps to `src/`.
+- Tailwind CSS v4 via `@tailwindcss/vite` — no `tailwind.config.js`. All config lives in `src/index.css` via `@theme`.
+- Brand color tokens in `@theme` (target state — migration in progress):
+  - `--color-brand-navy: #0D1F35` — dark backgrounds, primary CTAs
+  - `--color-brand-blue: #1B6EC2` — interactive elements, buttons
+  - `--color-brand-accent: #0EA5D6` — cyan highlights, icons, gradients
+  - `--color-brand-gold: #D4AF37` — badges, premium accents
+  - `--color-brand-light: #E8F4FD` — light tinted backgrounds
+- Font tokens: `--font-sans: "Inter"` (body/UI, weights 300–700), `--font-display: "Playfair Display"` (headings h1–h5, weights 400/600/700 + italics). Both loaded via Google Fonts CDN in `index.html`.
+- Typography base rules in `@layer base`: body uses `font-sans antialiased` with `letter-spacing: -0.01em`; headings use `font-display font-bold` with `letter-spacing: -0.02em`.
+- Utility classes in `index.css`: `.glass-card` (dark glass surface), `.glass-card-light` (light glass surface), `animate-marquee` (RTL scroll), `animate-marquee-ltr` (LTR scroll), `animate-float`, `animate-pulse-soft`.
+- `src/utils/cn.ts` exports `cn()` (clsx + tailwind-merge) — use for conditional class composition.
+- Path alias `@/` → `src/`.
+- Marquee strips duplicate their data arrays (`[...items, ...items]`) for seamless looping.
 
 ### External integrations
-| Service | Where | Purpose |
-|---------|-------|---------|
-| Airtable | `BookingModal.tsx` | Stores lead form submissions. Env vars: `VITE_AIRTABLE_TOKEN`, `VITE_AIRTABLE_LEADS_BASE`, `VITE_AIRTABLE_LEADS_TABLE` |
-| Railway webhook | `FloatingChatWidget.tsx` | Powers the Nova AI chat assistant. URL hardcoded as `WEBHOOK_URL` constant |
+| Service | File | Notes |
+|---------|------|-------|
+| Airtable | `BookingModal.tsx` | Lead form submissions. Env vars: `VITE_AIRTABLE_TOKEN`, `VITE_AIRTABLE_LEADS_BASE`, `VITE_AIRTABLE_LEADS_TABLE` |
+| Airtable | _(paid records)_ | `VITE_AIRTABLE_PAID_BASE`, `VITE_AIRTABLE_PAID_TABLE` |
+| Railway webhook | `FloatingChatWidget.tsx` | Nova AI chat. URL hardcoded as `WEBHOOK_URL` constant (not an env var) |
 | YouTube embed | `YouTubeSection.tsx` | Autoplay playlist from `@Neuralab-v6b` channel |
-| WhatsApp | `Footer.tsx`, `Academy.tsx` | Direct contact link to `+254757485677` |
-
-### Animations — marquee direction
-- `animate-marquee` scrolls **right-to-left** (standard, used in TrustedTeams row 1)
-- `animate-marquee-ltr` scrolls **left-to-right** (used in Hero partners strip and TrustedTeams row 2)
-- Both duplicate their data arrays (`[...items, ...items]`) for seamless looping
+| WhatsApp | `Footer.tsx`, `Academy.tsx` | Direct link to `+254757485677` |
 
 ## Environment variables
-Required in `.env` (never commit this file):
+Required in `.env`:
 ```
 VITE_AIRTABLE_TOKEN
 VITE_AIRTABLE_LEADS_BASE
 VITE_AIRTABLE_LEADS_TABLE
-VITE_AIRTABLE_PAID_BASE      # used for paid customer records
+VITE_AIRTABLE_PAID_BASE
 VITE_AIRTABLE_PAID_TABLE
 ```
 All vars must be prefixed `VITE_` to be accessible in the browser bundle.

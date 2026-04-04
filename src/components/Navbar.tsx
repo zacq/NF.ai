@@ -21,7 +21,7 @@ export default function Navbar({ scrolled, onBookingClick, isDark, onToggleTheme
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-        ? "bg-brand-bg/80 backdrop-blur-2xl border-b border-white/5 shadow-2xl shadow-black/50 py-2"
+        ? "bg-brand-navy/80 backdrop-blur-2xl border-b border-white/5 shadow-2xl shadow-black/50 py-2"
         : "bg-transparent py-4"
         }`}
     >
@@ -34,7 +34,7 @@ export default function Navbar({ scrolled, onBookingClick, isDark, onToggleTheme
               <span className="text-xl md:text-2xl font-display font-bold tracking-tight text-white leading-tight">
                 NeuraFlow
               </span>
-              <p className="text-[9px] text-brand-secondary uppercase tracking-[0.2em] font-black leading-none mt-1">
+              <p className="text-[9px] text-brand-accent uppercase tracking-[0.2em] font-black leading-none mt-1">
                 Growth Infrastructure
               </p>
             </div>
@@ -51,7 +51,7 @@ export default function Navbar({ scrolled, onBookingClick, isDark, onToggleTheme
                 className="text-xs uppercase tracking-[0.15em] font-bold text-white/50 hover:text-white transition-all duration-300 relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-primary transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-blue transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
             <button
@@ -59,7 +59,7 @@ export default function Navbar({ scrolled, onBookingClick, isDark, onToggleTheme
               className="text-xs uppercase tracking-[0.15em] font-bold text-white/50 hover:text-white transition-all duration-300 relative group"
             >
               Contact
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-primary transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-blue transition-all duration-300 group-hover:w-full"></span>
             </button>
           </div>
 
@@ -67,7 +67,7 @@ export default function Navbar({ scrolled, onBookingClick, isDark, onToggleTheme
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onBookingClick}
-              className="relative px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest text-white border border-brand-primary/30 bg-brand-primary/10 backdrop-blur-md overflow-hidden transition-all duration-300 hover:bg-brand-primary hover:text-white hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] active:scale-95"
+              className="relative px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest text-white border border-brand-blue/30 bg-brand-blue/10 backdrop-blur-md overflow-hidden transition-all duration-300 hover:bg-brand-blue hover:text-white hover:shadow-[0_0_30px_rgba(27,110,194,0.3)] active:scale-95"
             >
               Consult
             </button>
