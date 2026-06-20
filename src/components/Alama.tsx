@@ -167,7 +167,7 @@ const ALAMA_CSS = `
 @media(max-width:840px){.alama-page .found-grid{grid-template-columns:1fr;gap:38px}}
 
 /* ---- form ---- */
-.alama-page .formsec{background:var(--bone)}
+.alama-page .formsec{background:var(--bone)}.alama-page .formsec.pad{padding:clamp(36px,5vw,64px) 0}
 .alama-page .formcard{background:var(--bone-2);border:1px solid var(--line-light);border-top:3px solid var(--orange);border-radius:0 0 24px 24px;padding:clamp(20px,4vw,48px);max-width:860px;margin:0 auto;box-shadow:0 50px 90px -50px rgba(26,21,16,.4)}
 .alama-page .form-group{margin-top:28px;padding-top:22px;border-top:1px solid var(--line-light)}
 .alama-page .form-group:first-child{margin-top:0;padding-top:0;border-top:none}
@@ -718,10 +718,10 @@ export default function Alama() {
       {/* INTEREST FORM */}
       <section className="pad formsec" id="join">
         <div className="wrap">
-          <div className="sec-head reveal" style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
+          <div className="sec-head reveal" style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto', marginBottom: '28px' }}>
             <span className="eyebrow" style={{ justifyContent: 'center' }}>Join the list</span>
-            <h2>Tell us what your operation needs.</h2>
-            <p className="lead" style={{ margin: '0 auto' }}>Two minutes — puts you on the list and shapes what gets built first.</p>
+            <h2 style={{ color: 'var(--ink)' }}>Tell us what your operation needs.</h2>
+            <p className="lead" style={{ margin: '0 auto', color: 'var(--dim-on-light)' }}>Two minutes — puts you on the list and shapes what gets built first.</p>
           </div>
 
           <div className="formcard reveal">
@@ -789,7 +789,10 @@ export default function Alama() {
                       <label htmlFor="fherd">Herd / flock size</label>
                       <select id="fherd" name="fherd">
                         <option value="">Choose…</option>
-                        <option>Under 50</option><option>50 – 200</option><option>200 – 1,000</option><option>1,000+</option>
+                        <option value="Under 50">Under 50</option>
+                        <option value="50 – 200">50 – 200</option>
+                        <option value="200 – 1,000">200 – 1,000</option>
+                        <option value="1,000+">1,000+</option>
                       </select>
                     </div>
                     <div className="field">
