@@ -9,6 +9,7 @@ import YouTubeSection from "./components/YouTubeSection";
 import FloatingChatWidget from "./components/FloatingChatWidget";
 import Footer from "./components/Footer";
 import Academy from "./components/Academy";
+import Alama from "./components/Alama";
 
 import BookingModal from "./components/BookingModal";
 import PricingModal from "./components/PricingModal";
@@ -85,10 +86,13 @@ export function App() {
   }, []);
 
   const isAcademy = currentHash === '#/academy' || currentHash === '#academy';
+  const isAlama = currentHash === '#/alama' || currentHash === '#alama';
 
   return (
     <>
-      {isAcademy ? (
+      {isAlama ? (
+        <Alama />
+      ) : isAcademy ? (
         <Academy onBookingClick={openBooking} />
       ) : (
         <div className="min-h-screen bg-brand-navy text-white overflow-x-hidden">
