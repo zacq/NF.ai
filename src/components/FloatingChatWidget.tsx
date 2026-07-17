@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-const WEBHOOK_URL = "https://primary-production-bfd8.up.railway.app/webhook/neuraflow-chat";
+const WEBHOOK_URL = "https://primary-production-c0eb.up.railway.app/webhook/neuraflow-chat";
 
 const QUICK_REPLIES = [
   "What is NeuraFlow?",
