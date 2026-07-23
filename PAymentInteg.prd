@@ -1,0 +1,117 @@
+# Pip Nation — Payment Integration (PayHero + Airtable)
+
+Status: live in production (four20traders.com)
+Last updated: 2026-07-23
+
+## 1. Overview
+
+Enrollees pick a pricing tier, fill in the enrollment modal, and pay via
+M-Pesa through PayHero. A signup record is written to Airtable the moment
+checkout opens (`Payment Status: Pending`), then flipped to `Paid` or
+`Failed` once the transaction resolves — reconciled server-side by two
+Netlify Functions polling/receiving from PayHero directly. There is no
+third-party workflow tool (n8n) in this path anymore; everything is plain
+Netlify Functions calling the Airtable and PayHero REST APIs.
+
+## 2. History / why the current design looks like this
+
+1. **v1 — raw PayHero STK-push API.** `initiate-payment.js` called
+   PayHero's `POST /api/v2/payments` directly to fire an STK push, then the
+   frontend polled a `payment-status.js` function for the result.
+   Abandoned: real test transactions consistently resolved to `FAILED`
+   within ~6 seconds even after the correct M-Pesa PIN was entered, with no
+   money ever deducted — diagnosed as a bug on PayHero's STK-to-callback
+   reconciliation, not our integration (confirmed by reproducing the same
+   failure through PayHero's own API docs tester). This directly led to a
+   **hard rule: do not fire STK pushes** while iterating.
+2. **v2 (current) — PayHero's hosted Payment Button widget.** Verified
+   reliable via a real, confirmed M-Pesa transaction. `initiate-payment.js`
+   was simplified to only write the Airtable `Pending` record; the actual
+   M-Pesa prompt is now handled entirely client-side by PayHero's SDK
+   (`https://applet.payherokenya.com/cdn/button_sdk.js`). Server-side
+   reconciliation (confirming payment status and updating Airtable) is
+   handled directly by two Netlify Functions calling the Airtable and
+   PayHero REST APIs — no third-party workflow tool involved. This is the
+   current state described below.
+
+## 3. Flow
+
+```
+User picks tier -> Enrollment modal (index.html)
+  -> POST /api/initiate-payment
+       -> writes Airtable record: Payment Status = "Pending"
+       -> returns { externalReference: "PIPN-<timestamp>" }
+  -> PayHero.pay({ amount, reference: externalReference, phone, name })
+       -> PayHero's embedded checkout collects the M-Pesa PIN, in an
+          iframe/overlay the SDK manages
+       -> on resolve, SDK fires a window event; our modal just shows a
+          status message (it does NOT mark anything Paid itself)
+
+Server-side reconciliation (Pending -> Paid/Failed), by either path:
+
+  A) Webhook (fast path)
+     PayHero account-level Callback URL -> POST /api/payhero-webhook
+       -> extracts a reference from the payload (defensively — payload
+          shape isn't documented)
+       -> looks up the matching Airtable record by External Reference
+       -> re-verifies via GET PayHero transaction-status (does NOT trust
+          the POSTed status field, to avoid spoofing / payload-shape risk)
+       -> patches Airtable if the re-verified status is terminal
+
+  B) Poller (backstop, every 5 min via Netlify scheduled function)
+     -> queries Airtable for Payment Status = "Pending" created < 24h ago
+     -> re-verifies each via GET PayHero transaction-status, patches Airtable
+     -> separately queries Pending records older than 24h and marks them
+        "Abandoned" (keeps the working set from growing forever)
+```
+
+Both A and B share one helper module so the "verify + patch" logic isn't
+duplicated, and both are idempotent — a record already `Paid`/`Failed` is
+skipped on a second write, so it's safe for the webhook and poller to race
+each other on the same record.
+
+## 4. Files
+
+| File | Role |
+|---|---|
+| `index.html` (enrollment modal, ~line 1043) | Calls `/api/initiate-payment`, then `PayHero.pay()`. Listens for `payherosuccess` / `payherofailed` / `payheroclosed` window events for UI feedback only. |
+| `netlify/functions/initiate-payment.js` | Validates the form payload, normalizes the phone number to `254...`, writes the Airtable record with `Payment Status: Pending` and a generated `External Reference` (`PIPN-<timestamp>`). Does **not** call PayHero. |
+| `netlify/functions/payhero-webhook.js` | Receives PayHero's account-level callback. Always responds `200` (even on internal errors) to avoid retry storms; always re-verifies via PayHero's own status API before writing anything. |
+| `netlify/functions/payhero-poller.js` | Netlify scheduled function (`netlify.toml`, `*/5 * * * *`). Backstop reconciliation + 24h abandonment sweep. |
+| `netlify/functions/_lib/payhero-airtable.js` | Shared helper: `findRecordByReference`, `verifyTransactionStatus`, `applyResolution` (idempotent Airtable patch), `markAbandoned`. |
+
+## 5. External services
+
+**PayHero**
+- Payment Button widget: `paymentUrl: https://lipwa.link/10976`, `channelID: 10663`
+- Transaction status check: `GET https://backend.payhero.co.ke/api/v2/transaction-status?reference=...`
+- Auth: `Authorization: <PAYHERO_BASIC_AUTH_TOKEN>` header (value already includes the `Basic ` prefix — copy verbatim from PayHero dashboard **Account → API Keys**, not the older "API Credentials" screen)
+- Account-level Callback URL (dashboard **Account → Account Details → Integration**): `https://four20traders.com/api/payhero-webhook`
+
+**Airtable**
+- Base: `app19rrcmc7b9aecC`, table `Pip Nation Enrollments` (`tblTiFOX1T1oNjbDY`)
+- Fields used by this flow: `Name`, `Email`, `Phone`, `Tier`, `Price (KES)`, `Status`, `Source`, `Notes`, `Payment Status` (`Pending` / `Paid` / `Failed` / `Abandoned`), `External Reference`, `Payment Reference`, `Provider Reference`, `Paid At`
+
+## 6. Environment variables (Netlify)
+
+| Variable | Used by | Notes |
+|---|---|---|
+| `AIRTABLE_TOKEN` | initiate-payment, webhook, poller | Personal access token, needs base read/write scope |
+| `AIRTABLE_BASE_ID` | same | `app19rrcmc7b9aecC` |
+| `AIRTABLE_TABLE_ID` | same | `tblTiFOX1T1oNjbDY` |
+| `PAYHERO_BASIC_AUTH_TOKEN` | webhook, poller | From PayHero **API Keys** page |
+| `PAYHERO_WEBHOOK_SECRET` | webhook (optional) | If set, webhook checks it against `?token=` query param — currently **log-only**, not enforced, pending confirmation PayHero preserves query strings on the saved callback URL |
+
+All confirmed set in Netlify's Site configuration → Environment variables as of this document's date, except `PAYHERO_WEBHOOK_SECRET` (not yet added — optional).
+
+## 7. Known limitations / things not implemented
+
+- No fuzzy correlation fallback (phone + amount + recency) if a webhook
+  payload arrives without a usable reference — by design, to avoid
+  misattributing one enrollee's payment to another when tier prices repeat.
+  Uncorrelated callbacks are just logged; the poller is the backstop.
+- Webhook payload shape is inferred, not confirmed against a real live
+  callback yet — first real transaction after this change should be
+  checked against the function logs to confirm field names match.
+- `PAYHERO_WEBHOOK_SECRET` verification is currently advisory-only (logged
+  on mismatch, not rejected).
