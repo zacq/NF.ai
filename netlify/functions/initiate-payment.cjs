@@ -1,7 +1,12 @@
 const { normalizePhone, generateReference, createPendingRecord } = require('./_lib/payhero-airtable.cjs');
 
-const ALLOWED_TIERS = ['Foundations', 'Builder', 'Capstone Pro'];
-const MAX_AMOUNT = 500_000;
+// KES amounts, approximate conversion from the displayed USD prices ($20/$30/$45 @ ~130 KES/USD).
+// Source of truth for what actually gets charged — never trust a client-supplied amount.
+const TIER_PRICES_KES = {
+  Foundations: 2600,
+  Builder: 3900,
+  'Capstone Pro': 5850,
+};
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -24,14 +29,11 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid JSON' }) };
   }
 
-  const { tier, amount, phone } = payload;
+  const { tier, phone } = payload;
 
-  if (!ALLOWED_TIERS.includes(tier)) {
+  const amt = TIER_PRICES_KES[tier];
+  if (!amt) {
     return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid tier' }) };
-  }
-  const amt = Number(amount);
-  if (!Number.isFinite(amt) || amt <= 0 || amt > MAX_AMOUNT) {
-    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid amount' }) };
   }
   const normalizedPhone = normalizePhone(phone);
   if (!normalizedPhone) {

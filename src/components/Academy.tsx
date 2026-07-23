@@ -2,6 +2,46 @@ import { useEffect, useRef, useState } from 'react';
 import { ACADEMY_SECTION_IDS } from '../constants/academySections';
 import { Sparkles, MessageCircle, X, Send } from 'lucide-react';
 
+const PAYHERO_SDK_URL = 'https://applet.payherokenya.com/cdn/button_sdk.js';
+const PAYHERO_PAYMENT_URL = import.meta.env.VITE_PAYHERO_PAYMENT_URL as string;
+const PAYHERO_CHANNEL_ID = import.meta.env.VITE_PAYHERO_CHANNEL_ID as string;
+
+declare global {
+  interface Window {
+    PayHero?: {
+      init: (config: {
+        paymentUrl: string;
+        width?: string;
+        height?: string;
+        containerId: string;
+        channelID: string | number;
+        amount: number;
+        phone: string;
+        reference: string;
+        name?: string;
+        buttonName?: string;
+        buttonColor?: string;
+        successUrl?: string;
+        failedUrl?: string;
+      }) => void;
+    };
+  }
+}
+
+let payHeroScriptPromise: Promise<void> | null = null;
+function loadPayHeroScript(): Promise<void> {
+  if (window.PayHero) return Promise.resolve();
+  if (payHeroScriptPromise) return payHeroScriptPromise;
+  payHeroScriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = PAYHERO_SDK_URL;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Failed to load PayHero SDK'));
+    document.head.appendChild(script);
+  });
+  return payHeroScriptPromise;
+}
+
 const ACADEMY_WEBHOOK_URL = "https://primary-production-c0eb.up.railway.app/webhook/neuraflow-chat";
 
 const ACADEMY_QUICK_QUESTIONS = [
@@ -347,6 +387,24 @@ const ACADEMY_V2_CSS = `
   .academy-v2-page *,.academy-v2-page *::before,.academy-v2-page *::after{animation:none!important;transition:none!important}
   .academy-v2-page .ticker-track{transform:none}
 }
+
+.academy-v2-page .status-banner{position:sticky;top:0;z-index:59;text-align:center;padding:12px 16px;font-size:.88rem;font-weight:600}
+.academy-v2-page .status-banner.success{background:rgba(52,211,153,.14);color:var(--green);border-bottom:1px solid rgba(52,211,153,.3)}
+.academy-v2-page .status-banner.failed{background:rgba(251,113,133,.14);color:var(--red);border-bottom:1px solid rgba(251,113,133,.3)}
+.academy-v2-page .status-banner button{background:none;border:0;color:inherit;margin-left:12px;cursor:pointer;text-decoration:underline;font:inherit}
+
+.academy-v2-page .enroll-overlay{position:fixed;inset:0;z-index:80;background:rgba(5,5,8,.8);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px}
+.academy-v2-page .enroll-modal{position:relative;width:100%;max-width:420px;background:var(--surface);border:1px solid var(--line-bright);border-radius:20px;padding:32px}
+.academy-v2-page .enroll-close{position:absolute;top:16px;right:16px;background:none;border:0;color:var(--muted);cursor:pointer;font-size:1rem}
+.academy-v2-page .enroll-close:hover{color:var(--text)}
+.academy-v2-page .enroll-modal h3{font-family:var(--display);font-size:1.5rem;margin:8px 0 20px}
+.academy-v2-page .enroll-modal form{display:flex;flex-direction:column;gap:16px}
+.academy-v2-page .enroll-modal label{display:flex;flex-direction:column;gap:6px;font-size:.82rem;color:var(--muted)}
+.academy-v2-page .enroll-modal input{font-family:var(--body);font-size:1rem;color:var(--text);background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.academy-v2-page .enroll-modal input:focus{outline:none;border-color:var(--fuchsia)}
+.academy-v2-page .enroll-modal .btn{margin-top:6px;width:100%;justify-content:center;font-size:.95rem}
+.academy-v2-page .enroll-error{color:var(--red);font-size:.82rem}
+.academy-v2-page .enroll-help{color:var(--muted);font-size:.9rem;margin-bottom:16px}
 `;
 
 const SEATS_TOTAL = 30;
@@ -389,7 +447,6 @@ const OUTCOMES = [
 
 interface Tier {
   name: string;
-  cta: string;
   forText: string;
   price: string;
   priceWas?: string;
@@ -401,7 +458,6 @@ interface Tier {
 const TIERS: Tier[] = [
   {
     name: 'Foundations',
-    cta: 'foundations',
     forText: 'For the self-starter who wants the technical primitives, self-paced.',
     price: '$20',
     items: [
@@ -416,7 +472,6 @@ const TIERS: Tier[] = [
   },
   {
     name: 'Builder',
-    cta: 'builder',
     forText: 'For operators ready to build intelligent, Claude-powered systems.',
     price: '$30',
     priceWas: '$45',
@@ -433,7 +488,6 @@ const TIERS: Tier[] = [
   },
   {
     name: 'Capstone Pro',
-    cta: 'capstone',
     forText: 'For founders who want the full machine — built with you, deployed live.',
     price: '$45',
     items: [
@@ -488,8 +542,94 @@ function formatCountdown(deadline: Date) {
   };
 }
 
-function handleTierCta(tier: string) {
-  alert(`Wire this button to your ${tier} checkout / booking flow.`);
+interface EnrollModalProps {
+  tier: Tier;
+  onClose: () => void;
+}
+
+function EnrollModal({ tier, onClose }: EnrollModalProps) {
+  const [step, setStep] = useState<'form' | 'pay'>('form');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !phone.trim()) {
+      setError('Please fill in both fields.');
+      return;
+    }
+    setError('');
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/initiate-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: tier.name, phone }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not start payment');
+
+      await loadPayHeroScript();
+      setStep('pay');
+
+      requestAnimationFrame(() => {
+        window.PayHero?.init({
+          paymentUrl: PAYHERO_PAYMENT_URL,
+          width: '100%',
+          height: '100%',
+          containerId: 'payhero-container',
+          channelID: PAYHERO_CHANNEL_ID,
+          amount: data.amount,
+          phone: data.phone,
+          reference: data.reference,
+          name,
+          buttonName: 'Pay with M-Pesa',
+          buttonColor: '#d946ef',
+          successUrl: `${window.location.origin}/?enrolled=success#/academy`,
+          failedUrl: `${window.location.origin}/?enrolled=failed#/academy`,
+        });
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong — please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="enroll-overlay" onClick={onClose}>
+      <div className="enroll-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="enroll-close" onClick={onClose} aria-label="Close">✕</button>
+        <span className="t-name">{tier.name}</span>
+        <h3>Enroll — {tier.price}</h3>
+
+        {step === 'form' ? (
+          <form onSubmit={handleSubmit}>
+            <label>
+              Full name
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Wanjiru" />
+            </label>
+            <label>
+              M-Pesa phone number
+              <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="0712345678" />
+            </label>
+            {error && <p className="enroll-error">{error}</p>}
+            <button type="submit" className="btn btn-primary" disabled={submitting}>
+              {submitting ? 'Starting…' : 'Continue to Payment'}
+            </button>
+          </form>
+        ) : (
+          <div>
+            <p className="enroll-help">Click below to pay via M-Pesa STK Push.</p>
+            <div id="payhero-container" ref={containerRef} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default function Academy() {
@@ -497,6 +637,19 @@ export default function Academy() {
   const [countdown, setCountdown] = useState(() => formatCountdown(deadlineRef.current));
   const [wordIndex, setWordIndex] = useState(0);
   const [seatFillWidth, setSeatFillWidth] = useState('0%');
+  const [enrollTier, setEnrollTier] = useState<Tier | null>(null);
+  const [enrollStatus, setEnrollStatus] = useState<'success' | 'failed' | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const enrolled = params.get('enrolled');
+    if (enrolled === 'success' || enrolled === 'failed') {
+      setEnrollStatus(enrolled);
+      const url = new URL(window.location.href);
+      url.searchParams.delete('enrolled');
+      window.history.replaceState({}, '', url.toString());
+    }
+  }, []);
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -560,6 +713,17 @@ export default function Academy() {
   return (
     <div className="academy-v2-page">
       <div className="blob b1" /><div className="blob b2" /><div className="blob b3" />
+
+      {enrollStatus && (
+        <div className={`status-banner ${enrollStatus}`}>
+          {enrollStatus === 'success'
+            ? "Payment started — we'll confirm your enrollment shortly."
+            : "That payment didn't go through. You can try again, or reach us on WhatsApp."}
+          <button onClick={() => setEnrollStatus(null)}>Dismiss</button>
+        </div>
+      )}
+
+      {enrollTier && <EnrollModal tier={enrollTier} onClose={() => setEnrollTier(null)} />}
 
       <div className="urgency-bar">
         <span className="pulse" />
@@ -718,7 +882,7 @@ export default function Academy() {
                   <a
                     className={`btn ${t.popular ? 'btn-primary' : 'btn-ghost'}`}
                     href="#"
-                    onClick={(e) => { e.preventDefault(); handleTierCta(t.cta); }}
+                    onClick={(e) => { e.preventDefault(); setEnrollTier(t); }}
                   >
                     {t.popular ? <>Claim Builder — Save $15 <span className="arrow">→</span></> : t.name === 'Foundations' ? 'Start With Foundations' : 'Go Capstone Pro'}
                   </a>
