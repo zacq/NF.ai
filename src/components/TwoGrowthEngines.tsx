@@ -170,6 +170,14 @@ export default function TwoGrowthEngines() {
                 color: "from-rose-500/20 to-pink-500/10 border-rose-500/20",
                 accent: "text-rose-400",
               },
+              {
+                icon: "🎓",
+                title: "Self-Paced Learning Platforms",
+                description:
+                  "Agentic learning systems that help founders deliver industry knowledge through self-guided programs. Scale your expertise, grow your brand, and educate audiences without the traditional bottlenecks of knowledge distribution.",
+                color: "from-indigo-500/20 to-blue-500/10 border-indigo-500/20",
+                accent: "text-indigo-400",
+              },
             ].map((tile, i) => (
               <div
                 key={i}
