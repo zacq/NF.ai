@@ -10,6 +10,7 @@ import FloatingChatWidget from "./components/FloatingChatWidget";
 import Footer from "./components/Footer";
 import Academy from "./components/Academy";
 import Alama from "./components/Alama";
+import Resources from "./components/Resources";
 import { ACADEMY_SECTION_IDS } from "./constants/academySections";
 
 import BookingModal from "./components/BookingModal";
@@ -91,6 +92,7 @@ export function App() {
     currentHash === '#academy' ||
     ACADEMY_SECTION_IDS.some((id) => currentHash === `#${id}`);
   const isAlama = currentHash === '#/alama' || currentHash === '#alama';
+  const isResources = currentHash === '#/resources' || currentHash === '#resources';
 
   return (
     <>
@@ -98,6 +100,8 @@ export function App() {
         <Alama />
       ) : isAcademy ? (
         <Academy />
+      ) : isResources ? (
+        <Resources />
       ) : (
         <div className="min-h-screen bg-brand-navy text-white overflow-x-hidden">
           <Navbar scrolled={scrolled} onBookingClick={openBooking} isDark={isDark} onToggleTheme={toggleTheme} />

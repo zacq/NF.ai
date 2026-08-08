@@ -1,7 +1,7 @@
 const footerLinks = {
   Product: ["Features", "Integrations", "Pricing", "Changelog", "Roadmap", "Status"],
   Solutions: ["For Startups", "For Enterprise", "For Agencies", "Use Cases", "Templates", "Customers"],
-  Resources: ["Documentation", "API Reference", "Blog", "Community", "Tutorials", "Webinars"],
+  Resources: ["Free Guides", "Marketing Playbook", "AI Briefings", "Skill Packs"],
   Company: ["About", "Careers", "Press", "Partners", "Contact", "Legal"],
 };
 
@@ -148,7 +148,10 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-white/40 hover:text-white/70 text-sm transition-colors">
+                    <a
+                      href={category === 'Resources' ? '/#/resources' : '#'}
+                      className="text-white/40 hover:text-white/70 text-sm transition-colors"
+                    >
                       {link}
                     </a>
                   </li>
