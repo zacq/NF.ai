@@ -106,10 +106,10 @@ export default function SystemArchitecture() {
                   <p className="text-[9px] uppercase tracking-[0.3em] font-black text-brand-accent/70 mb-1.5">
                     {layer.subtitle}
                   </p>
-                  <h3 className="text-white font-bold text-base mb-2 group-hover:text-brand-blue transition-colors leading-snug">
+                  <h3 className="text-white font-bold text-base mb-0 sm:mb-2 group-hover:text-brand-blue transition-colors leading-snug">
                     {layer.title}
                   </h3>
-                  <p className="text-white/40 text-xs leading-relaxed line-clamp-3">
+                  <p className="hidden sm:block text-white/40 text-xs leading-relaxed line-clamp-3">
                     {layer.description}
                   </p>
                 </div>
@@ -135,7 +135,7 @@ export default function SystemArchitecture() {
           {/* Top gradient border */}
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/60 to-transparent" />
 
-          <div className="relative z-10 text-center px-8 py-16 md:py-20">
+          <div className="relative z-10 text-center px-6 sm:px-8 py-10 sm:py-16 md:py-20">
             <h3 className="text-2xl sm:text-3xl md:text-5xl font-display font-extrabold text-white mb-3 tracking-tight">
               Ready to Decentralize
             </h3>

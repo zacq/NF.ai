@@ -10,6 +10,7 @@ const partners = [
   { name: "Airtable", icon: "⊞" },
   { name: "WhatsApp Business", icon: "◎" },
   { name: "Meta", icon: "∞" },
+  { name: "ClickUp", icon: "✓" },
 ];
 
 // Duplicate for seamless loop
@@ -157,7 +158,7 @@ export default function Hero() {
         </div>
 
         {/* Partners Carousel — streams left to right */}
-        <div className="border-t border-white/5 pt-8">
+        <div className="hidden sm:block border-t border-white/5 pt-8">
           <p className="text-[10px] uppercase tracking-[0.25em] text-white/30 font-bold mb-5">
             Integrated with Global Markets
           </p>

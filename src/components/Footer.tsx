@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="relative border-t border-white/5 pt-12 pb-8">
       {/* CTA Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-10">
-        <div className="relative overflow-hidden rounded-3xl border border-violet-500/20 bg-gradient-to-br from-violet-900/40 via-[#0d0d2e] to-cyan-900/20 p-12 text-center">
+        <div className="relative overflow-hidden rounded-3xl border border-violet-500/20 bg-gradient-to-br from-violet-900/40 via-[#0d0d2e] to-cyan-900/20 p-6 sm:p-12 text-center">
           {/* Top line */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
           {/* Glow orbs */}
@@ -46,9 +46,9 @@ export default function Footer() {
 
       {/* Links */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-8 mb-8 md:mb-12">
           {/* Brand column */}
-          <div className="col-span-2">
+          <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <img src="/logo.png" alt="NeuraFlow Logo" className="h-10 w-auto object-contain" />
               <span className="text-xl font-bold text-white">NeuraFlow</span>
@@ -141,9 +141,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
+          {/* Link columns — desktop only, mobile keeps just the brand/social/legal essentials */}
           {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
+            <div key={category} className="hidden md:block">
               <h4 className="text-white font-semibold text-sm mb-4">{category}</h4>
               <ul className="space-y-2.5">
                 {links.map((link) => (

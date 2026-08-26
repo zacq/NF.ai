@@ -309,27 +309,27 @@ const ACADEMY_V2_CSS = `
 .academy-v2-page .pricing{background:linear-gradient(180deg,transparent,rgba(217,70,239,.05) 45%,transparent)}
 .academy-v2-page .deadline-strip{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:0 auto 46px;max-width:640px;border:1px solid rgba(251,113,133,.3);background:rgba(251,113,133,.06);border-radius:14px;padding:14px 22px;font-size:.88rem}
 .academy-v2-page .deadline-strip .count{font-family:var(--data);font-weight:700;color:var(--red);font-variant-numeric:tabular-nums;letter-spacing:.05em}
-.academy-v2-page .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
-.academy-v2-page .tier{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:36px 30px;display:flex;flex-direction:column;position:relative;transition:transform .2s,border-color .2s}
+.academy-v2-page .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.academy-v2-page .tier{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 20px;display:flex;flex-direction:column;position:relative;transition:transform .2s,border-color .2s}
 .academy-v2-page .tier:hover{transform:translateY(-4px);border-color:var(--line-bright)}
-.academy-v2-page .tier.popular{background:linear-gradient(180deg,#171126,#12101d);border:1px solid rgba(217,70,239,.5);box-shadow:0 30px 80px -30px rgba(217,70,239,.35);transform:scale(1.04)}
-.academy-v2-page .tier.popular:hover{transform:scale(1.04) translateY(-4px)}
+.academy-v2-page .tier.popular{background:linear-gradient(180deg,#171126,#12101d);border:1px solid rgba(217,70,239,.5);box-shadow:0 30px 80px -30px rgba(217,70,239,.35);transform:scale(1.02)}
+.academy-v2-page .tier.popular:hover{transform:scale(1.02) translateY(-4px)}
 .academy-v2-page .pop-badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;border-radius:99px;padding:7px 18px;white-space:nowrap}
 .academy-v2-page .tier .t-name{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted)}
 .academy-v2-page .tier.popular .t-name{color:#e9d5ff}
-.academy-v2-page .tier .t-for{font-size:.85rem;color:var(--dim);margin-top:6px;min-height:2.6em}
-.academy-v2-page .price-row{display:flex;align-items:baseline;gap:10px;margin:20px 0 4px}
-.academy-v2-page .price{font-family:var(--data);font-size:3.1rem;font-weight:700;line-height:1}
+.academy-v2-page .tier .t-for{font-size:.8rem;color:var(--dim);margin-top:5px;min-height:2.4em}
+.academy-v2-page .price-row{display:flex;align-items:baseline;gap:8px;margin:14px 0 3px}
+.academy-v2-page .price{font-family:var(--data);font-size:2.3rem;font-weight:700;line-height:1}
 .academy-v2-page .tier.popular .price{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .academy-v2-page .price-was{font-family:var(--data);color:var(--dim);text-decoration:line-through;font-size:1.05rem}
 .academy-v2-page .price-per{font-size:.8rem;color:var(--dim)}
-.academy-v2-page .tier ul{list-style:none;margin:26px 0 30px;display:grid;gap:12px;flex:1}
-.academy-v2-page .tier li{font-size:.89rem;color:var(--muted);padding-left:24px;position:relative}
+.academy-v2-page .tier ul{list-style:none;margin:16px 0 20px;display:grid;gap:9px;flex:1}
+.academy-v2-page .tier li{font-size:.82rem;color:var(--muted);padding-left:20px;position:relative}
 .academy-v2-page .tier li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
 .academy-v2-page .tier li.no{color:var(--dim)}
 .academy-v2-page .tier li.no::before{content:"—";color:var(--dim)}
 .academy-v2-page .tier .btn{justify-content:center;width:100%}
-.academy-v2-page .tier .t-urgency{text-align:center;margin-top:12px;font-size:.75rem;color:var(--dim)}
+.academy-v2-page .tier .t-urgency{text-align:center;margin-top:8px;font-size:.72rem;color:var(--dim)}
 .academy-v2-page .tier.popular .t-urgency{color:#f0abfc}
 .academy-v2-page .pay-note{text-align:center;margin-top:32px;font-size:.83rem;color:var(--dim)}
 .academy-v2-page .pay-note b{color:var(--muted)}

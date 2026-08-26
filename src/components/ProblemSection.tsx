@@ -94,7 +94,7 @@ export default function ProblemSection() {
                 </svg>
                 <span className="text-white/60 text-sm font-medium">{row.problem}</span>
               </div>
-              <div className="px-4 py-2 border-t border-white/5">
+              <div className="hidden sm:block px-4 py-2 border-t border-white/5">
                 <p className="text-white/25 text-xs italic leading-relaxed">{row.gap}</p>
               </div>
               <div className="flex items-center gap-2 px-4 py-3 border-t border-white/5 bg-emerald-500/[0.05]">

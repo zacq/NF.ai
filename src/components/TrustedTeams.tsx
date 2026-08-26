@@ -200,7 +200,7 @@ export default function TrustedTeams() {
               </div>
 
               {/* Quote */}
-              <blockquote className="text-white/60 text-sm leading-relaxed italic border-t border-white/5 pt-5">
+              <blockquote className="text-white/60 text-sm leading-relaxed italic border-t border-white/5 pt-5 line-clamp-3 sm:line-clamp-none">
                 "{active.quote}"
               </blockquote>
             </div>

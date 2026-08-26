@@ -181,18 +181,18 @@ export default function TwoGrowthEngines() {
             ].map((tile, i) => (
               <div
                 key={i}
-                className={`relative p-6 rounded-2xl border bg-gradient-to-b ${tile.color} hover:brightness-110 transition-all duration-300`}
+                className={`relative p-4 sm:p-6 rounded-2xl border bg-gradient-to-b ${tile.color} hover:brightness-110 transition-all duration-300`}
               >
-                <div className={`text-2xl mb-3`}>{tile.icon}</div>
-                <h4 className="text-white font-bold text-base mb-2">{tile.title}</h4>
-                <p className="text-white/50 text-sm leading-relaxed">{tile.description}</p>
+                <div className={`text-2xl mb-2 sm:mb-3`}>{tile.icon}</div>
+                <h4 className="text-white font-bold text-base mb-0 sm:mb-2">{tile.title}</h4>
+                <p className="hidden sm:block text-white/50 text-sm leading-relaxed">{tile.description}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Closing Statement */}
-        <div className="mt-8 text-center border-t border-white/5 pt-6">
+        <div className="hidden sm:block mt-8 text-center border-t border-white/5 pt-6">
           <p className="text-white/40 text-base max-w-3xl mx-auto italic leading-relaxed">
             "All systems integrate seamlessly. Attention Infrastructure fuels the Traffic stage, feeding the AI Sales System with qualified leads."
           </p>
