@@ -84,24 +84,30 @@ export default function ProblemSection() {
           ))}
         </div>
 
-        {/* Mobile cards — visible only on small screens */}
-        <div className="md:hidden space-y-3 mb-8">
+        {/* Mobile cards — compact 2-up grid, "why" explainer collapsed behind a tap */}
+        <div className="grid grid-cols-2 gap-2 mb-8 md:hidden">
           {rows.map((row, i) => (
-            <div key={i} className="rounded-xl border border-white/8 overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 bg-red-500/[0.05]">
-                <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div key={i} className="rounded-lg border border-white/8 overflow-hidden">
+              <div className="flex items-start gap-1.5 px-2.5 py-2 bg-red-500/[0.05]">
+                <svg className="w-3.5 h-3.5 text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                <span className="text-white/60 text-sm font-medium">{row.problem}</span>
+                <span className="text-white/60 text-xs font-medium leading-snug">{row.problem}</span>
               </div>
-              <div className="hidden sm:block px-4 py-2 border-t border-white/5">
-                <p className="text-white/25 text-xs italic leading-relaxed">{row.gap}</p>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-3 border-t border-white/5 bg-emerald-500/[0.05]">
-                <svg className="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <details className="group border-t border-white/5 [&::-webkit-details-marker]:hidden">
+                <summary className="list-none flex items-center justify-center gap-1 px-2 py-1 cursor-pointer text-white/30 text-[9px] uppercase tracking-widest">
+                  Why
+                  <svg className="w-2.5 h-2.5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="text-white/25 text-[10px] italic leading-snug px-2.5 pb-2">{row.gap}</p>
+              </details>
+              <div className="flex items-start gap-1.5 px-2.5 py-2 border-t border-white/5 bg-emerald-500/[0.05]">
+                <svg className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-white/80 text-sm font-medium">{row.solution}</span>
+                <span className="text-white/80 text-xs font-medium leading-snug">{row.solution}</span>
               </div>
             </div>
           ))}

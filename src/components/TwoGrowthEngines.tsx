@@ -128,8 +128,8 @@ export default function TwoGrowthEngines() {
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
+          {(() => {
+            const tiles = [
               {
                 icon: "⭐",
                 title: "Reputation Management Workflows",
@@ -178,17 +178,46 @@ export default function TwoGrowthEngines() {
                 color: "from-indigo-500/20 to-blue-500/10 border-indigo-500/20",
                 accent: "text-indigo-400",
               },
-            ].map((tile, i) => (
-              <div
-                key={i}
-                className={`relative p-4 sm:p-6 rounded-2xl border bg-gradient-to-b ${tile.color} hover:brightness-110 transition-all duration-300`}
-              >
-                <div className={`text-2xl mb-2 sm:mb-3`}>{tile.icon}</div>
-                <h4 className="text-white font-bold text-base mb-0 sm:mb-2">{tile.title}</h4>
-                <p className="hidden sm:block text-white/50 text-sm leading-relaxed">{tile.description}</p>
-              </div>
-            ))}
-          </div>
+            ];
+            return (
+              <>
+                {/* Desktop — full cards, description always visible */}
+                <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {tiles.map((tile, i) => (
+                    <div
+                      key={i}
+                      className={`relative p-6 rounded-2xl border bg-gradient-to-b ${tile.color} hover:brightness-110 transition-all duration-300`}
+                    >
+                      <div className="text-2xl mb-3">{tile.icon}</div>
+                      <h4 className="text-white font-bold text-base mb-2">{tile.title}</h4>
+                      <p className="text-white/50 text-sm leading-relaxed">{tile.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mobile — compact 2-up grid, description collapsed behind a tap */}
+                <div className="grid grid-cols-2 gap-2 sm:hidden">
+                  {tiles.map((tile, i) => (
+                    <details
+                      key={i}
+                      className={`group relative rounded-xl border bg-gradient-to-b ${tile.color} [&::-webkit-details-marker]:hidden`}
+                    >
+                      <summary className="list-none p-3 cursor-pointer">
+                        <div className="flex items-start justify-between gap-1">
+                          <span className="text-lg">{tile.icon}</span>
+                          <svg className="w-3 h-3 mt-1 text-white/30 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                        <h4 className="text-white font-bold text-xs leading-snug mt-1.5">{tile.title}</h4>
+                      </summary>
+                      <p className="text-white/50 text-xs leading-relaxed px-3 pb-3">{tile.description}</p>
+                    </details>
+                  ))}
+                </div>
+              </>
+            );
+          })()}
         </div>
 
         {/* Closing Statement */}

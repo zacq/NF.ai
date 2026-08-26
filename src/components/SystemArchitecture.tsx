@@ -81,8 +81,8 @@ export default function SystemArchitecture() {
           </p>
         </div>
 
-        {/* Pipeline — horizontal on desktop, vertical on mobile */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-0 items-stretch mb-10">
+        {/* Pipeline — desktop: horizontal cards with full description */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-0 items-stretch mb-10">
           {layers.map((layer, i) => (
             <div key={i} className="relative flex lg:flex-col">
               {/* Card */}
@@ -106,10 +106,10 @@ export default function SystemArchitecture() {
                   <p className="text-[9px] uppercase tracking-[0.3em] font-black text-brand-accent/70 mb-1.5">
                     {layer.subtitle}
                   </p>
-                  <h3 className="text-white font-bold text-base mb-0 sm:mb-2 group-hover:text-brand-blue transition-colors leading-snug">
+                  <h3 className="text-white font-bold text-base mb-2 group-hover:text-brand-blue transition-colors leading-snug">
                     {layer.title}
                   </h3>
-                  <p className="hidden sm:block text-white/40 text-xs leading-relaxed line-clamp-3">
+                  <p className="text-white/40 text-xs leading-relaxed line-clamp-3">
                     {layer.description}
                   </p>
                 </div>
@@ -122,6 +122,33 @@ export default function SystemArchitecture() {
                 </div>
               )}
             </div>
+          ))}
+        </div>
+
+        {/* Pipeline — mobile: compact 2-up grid, description collapsed behind a tap */}
+        <div className="grid grid-cols-2 gap-2 mb-10 sm:hidden">
+          {layers.map((layer, i) => (
+            <details key={i} className={`group relative rounded-xl border ${layer.border} bg-white/[0.02] [&::-webkit-details-marker]:hidden`}>
+              <summary className="list-none p-3 cursor-pointer">
+                <div className="flex items-start justify-between gap-1 mb-2">
+                  <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${layer.gradient} flex items-center justify-center text-white flex-shrink-0`}>
+                    {layer.icon}
+                  </div>
+                  <svg className="w-3 h-3 mt-1 text-white/30 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+                <p className="text-[8px] uppercase tracking-[0.2em] font-black text-brand-accent/70 mb-1">
+                  {layer.subtitle}
+                </p>
+                <h3 className="text-white font-bold text-xs leading-snug">
+                  {layer.title}
+                </h3>
+              </summary>
+              <p className="text-white/40 text-[11px] leading-relaxed px-3 pb-3">
+                {layer.description}
+              </p>
+            </details>
           ))}
         </div>
 
