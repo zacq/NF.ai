@@ -407,6 +407,21 @@ const ACADEMY_V2_CSS = `
 .academy-v2-page .enroll-help{color:var(--muted);font-size:.9rem;margin-bottom:16px}
 `;
 
+// Injected at module load (not in a component effect) so the stylesheet is in
+// <head> before Academy ever renders — avoids a flash of unstyled content.
+if (typeof document !== 'undefined' && !document.getElementById('academy-v2-css')) {
+  const link = document.createElement('link');
+  link.id = 'academy-v2-fonts';
+  link.rel = 'stylesheet';
+  link.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap';
+  document.head.appendChild(link);
+
+  const style = document.createElement('style');
+  style.id = 'academy-v2-css';
+  style.textContent = ACADEMY_V2_CSS;
+  document.head.appendChild(style);
+}
+
 const SEATS_TOTAL = 30;
 const SEATS_TAKEN = 23;
 
@@ -649,24 +664,6 @@ export default function Academy() {
       url.searchParams.delete('enrolled');
       window.history.replaceState({}, '', url.toString());
     }
-  }, []);
-
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.id = 'academy-v2-fonts';
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap';
-    document.head.appendChild(link);
-
-    const style = document.createElement('style');
-    style.id = 'academy-v2-css';
-    style.textContent = ACADEMY_V2_CSS;
-    document.head.appendChild(style);
-
-    return () => {
-      document.getElementById('academy-v2-fonts')?.remove();
-      document.getElementById('academy-v2-css')?.remove();
-    };
   }, []);
 
   useEffect(() => {
