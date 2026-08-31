@@ -1,4 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const headlines = [
+  { line1: "Buy Back", line2: "Your Time." },
+  { line1: "The Sovereign", line2: "Growth Infrastructure." },
+];
 
 const partners = [
   { name: "Anthropic", icon: "◈" },
@@ -18,6 +23,19 @@ const partnerItems = [...partners, ...partners];
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [headlineVisible, setHeadlineVisible] = useState(true);
+
+  useEffect(() => {
+    const rotate = setInterval(() => {
+      setHeadlineVisible(false);
+      setTimeout(() => {
+        setHeadlineIndex((i) => (i + 1) % headlines.length);
+        setHeadlineVisible(true);
+      }, 300);
+    }, 4000);
+    return () => clearInterval(rotate);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -121,10 +139,14 @@ export default function Hero() {
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold leading-[1.1] text-white tracking-tight">
-              Buy Back <br />
+            <h1
+              className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold leading-[1.1] text-white tracking-tight transition-opacity duration-300 ${
+                headlineVisible ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {headlines[headlineIndex].line1} <br />
               <span className="bg-gradient-to-r from-brand-blue via-brand-gold to-brand-accent bg-clip-text text-transparent">
-                Your Time.
+                {headlines[headlineIndex].line2}
               </span>
             </h1>
           </div>
