@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import Academy from "./components/Academy";
 import Alama from "./components/Alama";
 import Resources from "./components/Resources";
+import Services from "./components/Services";
 import { ACADEMY_SECTION_IDS } from "./constants/academySections";
 
 import BookingModal from "./components/BookingModal";
@@ -93,6 +94,7 @@ export function App() {
     ACADEMY_SECTION_IDS.some((id) => currentHash === `#${id}`);
   const isAlama = currentHash === '#/alama' || currentHash === '#alama';
   const isResources = currentHash === '#/resources' || currentHash === '#resources';
+  const isServices = currentHash === '#/services' || currentHash === '#services';
 
   return (
     <>
@@ -102,6 +104,8 @@ export function App() {
         <Academy />
       ) : isResources ? (
         <Resources />
+      ) : isServices ? (
+        <Services />
       ) : (
         <div className="min-h-screen bg-brand-navy text-white overflow-x-hidden">
           <Navbar scrolled={scrolled} onBookingClick={openBooking} isDark={isDark} onToggleTheme={toggleTheme} />

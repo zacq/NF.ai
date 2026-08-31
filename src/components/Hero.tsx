@@ -117,14 +117,14 @@ export default function Hero() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
               </span>
               <span className="text-xs tracking-[0.2em] text-white/70 font-semibold uppercase">
-                Architecting Infinite Scale
+                Agent Is The New Software
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold leading-[1.1] text-white tracking-tight">
-              The Sovereign <br />
+              Buy Back <br />
               <span className="bg-gradient-to-r from-brand-blue via-brand-gold to-brand-accent bg-clip-text text-transparent">
-                Growth Infrastructure.
+                Your Time.
               </span>
             </h1>
           </div>
@@ -132,9 +132,9 @@ export default function Hero() {
           {/* RIGHT — Description */}
           <div className="flex items-center">
             <p className="text-base sm:text-lg md:text-xl text-white/60 leading-relaxed font-light">
-              NeuraFlow installs elite-tier AI attention engines and automated sales systems.{" "}
+              NeuraFlow installs elite-tier growth infrastructure for soloprenuers and brand owners building in the digital space.{" "}
               <span className="text-white/80 font-medium">
-                We don't just market — we build the machine that generates your future.
+                We turn your owned leads into better offers — then run the machine that closes them, so you get your time back.
               </span>
             </p>
           </div>

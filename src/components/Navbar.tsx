@@ -13,7 +13,7 @@ export default function Navbar({ scrolled, onBookingClick, isDark, onToggleTheme
 
   const menuItems = [
     { name: "Home", href: "#" },
-    { name: "Services", href: "#two-engines" },
+    { name: "Services", href: "/#/services" },
     { name: "Portfolio", href: "#portfolio" },
     { name: "Academy", href: "/#/academy", external: true },
   ];

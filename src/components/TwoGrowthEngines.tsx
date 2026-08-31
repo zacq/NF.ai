@@ -38,10 +38,12 @@ export default function TwoGrowthEngines() {
             </div>
             <ul className="space-y-3 mb-8">
               {[
-                "Algorithm-native content",
-                "Scalable UGC production",
-                "Transformation storytelling",
-                "Continuous traffic flow",
+                "Total visibility — flood the scroll, 3x daily",
+                "Speed to lead — first response wins",
+                "Omnichannel distribution, everywhere at once",
+                "Brand voice & tone amplification",
+                "Volume beats perfection, algorithm-native cadence",
+                "Compounding edge over slower-moving competitors",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-white/60">
                   <svg className="w-4 h-4 text-violet-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,107 +119,64 @@ export default function TwoGrowthEngines() {
           </div>
         </div>
 
-        {/* What You Really Get */}
+        {/* The Attention Formula */}
         <div className="mt-12">
-          <div className="text-center mb-10">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/10 text-violet-300 text-xs font-medium uppercase tracking-widest mb-3">
+              The Attention Formula
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+              Every piece of content follows the same structure
+            </h3>
+            <p className="text-white/50 text-sm sm:text-base max-w-xl mx-auto">
+              Volume beats perfection. We flood the scroll with content engineered on one formula — built to stop the scroll, build tension, and convert.
+            </p>
+          </div>
+          <div className="flex justify-between items-start max-w-2xl mx-auto mb-2">
+            {["Hook", "Rising Action", "Climax", "Resolution"].map((stage, i) => (
+              <div key={i} className="flex flex-col items-center px-1 flex-1">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-white text-xs font-bold mb-1.5">
+                  {i + 1}
+                </div>
+                <span className="text-white/60 text-xs text-center">{stage}</span>
+              </div>
+            ))}
+          </div>
+          <div className="max-w-2xl mx-auto h-0.5 bg-gradient-to-r from-violet-500/40 via-cyan-500/30 to-violet-500/40" />
+        </div>
+
+        {/* What You Really Get — teaser */}
+        <div className="mt-12">
+          <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/50 text-xs font-medium uppercase tracking-widest mb-3">
               What You Really Get
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold text-white">
-              Every system included in your infrastructure
+              A glimpse of what's included
             </h3>
           </div>
 
-          {(() => {
-            const tiles = [
-              {
-                icon: "⭐",
-                title: "Reputation Management Workflows",
-                description:
-                  "Automated systems that monitor, respond to, and amplify your brand's online presence across platforms. AI-driven review responses, sentiment tracking, and proactive reputation signals — operating 24/7 without human oversight.",
-                color: "from-violet-500/20 to-purple-500/10 border-violet-500/20",
-                accent: "text-violet-400",
-              },
-              {
-                icon: "🔄",
-                title: "Database Reactivation Workflows",
-                description:
-                  "Re-engage dormant leads and past customers through precision-timed, AI-personalized outreach sequences. Turn cold contacts into warm opportunities using behavioural triggers and multi-channel nudges.",
-                color: "from-cyan-500/20 to-blue-500/10 border-cyan-500/20",
-                accent: "text-cyan-400",
-              },
-              {
-                icon: "💬",
-                title: "WhatsApp & Web Agents Setup",
-                description:
-                  "Deploy conversational AI agents across WhatsApp and your website that qualify, capture, and route leads instantly. No missed messages, no delayed responses — intelligent agents that sell while you sleep.",
-                color: "from-emerald-500/20 to-teal-500/10 border-emerald-500/20",
-                accent: "text-emerald-400",
-              },
-              {
-                icon: "🎙️",
-                title: "A.I Voice Agents",
-                description:
-                  "Human-sounding AI voice agents that handle inbound inquiries, outbound follow-ups, and appointment setting over the phone. Consistent, scalable, and always on-brand.",
-                color: "from-orange-500/20 to-amber-500/10 border-orange-500/20",
-                accent: "text-orange-400",
-              },
-              {
-                icon: "🖥️",
-                title: "Local A.I Agent Installation",
-                description:
-                  "Agentic workflow systems that run locally within your business ecosystem without being exposed to the online environment. Full AI capability, complete data sovereignty, zero cloud dependency.",
-                color: "from-rose-500/20 to-pink-500/10 border-rose-500/20",
-                accent: "text-rose-400",
-              },
-              {
-                icon: "🎓",
-                title: "Self-Paced Learning Platforms",
-                description:
-                  "Agentic learning systems that help founders deliver industry knowledge through self-guided programs. Scale your expertise, grow your brand, and educate audiences without the traditional bottlenecks of knowledge distribution.",
-                color: "from-indigo-500/20 to-blue-500/10 border-indigo-500/20",
-                accent: "text-indigo-400",
-              },
-            ];
-            return (
-              <>
-                {/* Desktop — full cards, description always visible */}
-                <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {tiles.map((tile, i) => (
-                    <div
-                      key={i}
-                      className={`relative p-6 rounded-2xl border bg-gradient-to-b ${tile.color} hover:brightness-110 transition-all duration-300`}
-                    >
-                      <div className="text-2xl mb-3">{tile.icon}</div>
-                      <h4 className="text-white font-bold text-base mb-2">{tile.title}</h4>
-                      <p className="text-white/50 text-sm leading-relaxed">{tile.description}</p>
-                    </div>
-                  ))}
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            {[
+              { icon: "💬", title: "WhatsApp & Web Agents Setup", color: "from-emerald-500/20 to-teal-500/10 border-emerald-500/20" },
+              { icon: "🎙️", title: "A.I Voice Agents", color: "from-orange-500/20 to-amber-500/10 border-orange-500/20" },
+              { icon: "🔄", title: "Database Reactivation Workflows", color: "from-cyan-500/20 to-blue-500/10 border-cyan-500/20" },
+            ].map((tile, i) => (
+              <div
+                key={i}
+                className={`relative p-5 rounded-2xl border bg-gradient-to-b ${tile.color} text-center hover:brightness-110 transition-all duration-300`}
+              >
+                <div className="text-2xl mb-2">{tile.icon}</div>
+                <h4 className="text-white font-bold text-sm">{tile.title}</h4>
+              </div>
+            ))}
+          </div>
 
-                {/* Mobile — compact 2-up grid, description collapsed behind a tap */}
-                <div className="grid grid-cols-2 gap-2 sm:hidden">
-                  {tiles.map((tile, i) => (
-                    <details
-                      key={i}
-                      className={`group relative rounded-xl border bg-gradient-to-b ${tile.color} [&::-webkit-details-marker]:hidden`}
-                    >
-                      <summary className="list-none p-3 cursor-pointer">
-                        <div className="flex items-start justify-between gap-1">
-                          <span className="text-lg">{tile.icon}</span>
-                          <svg className="w-3 h-3 mt-1 text-white/30 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                        <h4 className="text-white font-bold text-xs leading-snug mt-1.5">{tile.title}</h4>
-                      </summary>
-                      <p className="text-white/50 text-xs leading-relaxed px-3 pb-3">{tile.description}</p>
-                    </details>
-                  ))}
-                </div>
-              </>
-            );
-          })()}
+          <div className="text-center">
+            <a href="/#/services" className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm font-medium transition-colors">
+              See everything you get →
+            </a>
+          </div>
         </div>
 
         {/* Closing Statement */}

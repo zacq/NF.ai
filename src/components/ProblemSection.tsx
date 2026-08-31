@@ -48,7 +48,7 @@ export default function ProblemSection() {
             </span>
           </h2>
           <p className="text-white/50 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            Every day you rely on manual outreach, inconsistent content, and human-dependent follow-ups, you're leaving compounding revenue on the table.{" "}
+            You started without the infrastructure to support growth — and the workload became unbearable. Manual outreach, inconsistent content, and human-dependent follow-ups compound against you every day.{" "}
             <span className="text-white/70">The market has already moved.</span>
           </p>
         </div>
@@ -119,7 +119,7 @@ export default function ProblemSection() {
             Outcome: Human-rate growth ceiling. Burnout loop. Budget bleed.
           </div>
           <div className="px-4 py-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-emerald-300 text-sm font-medium">
-            Outcome: Machine-rate growth. Zero dependency. Compounding returns.
+            Outcome: 80% of repetitive tasks eliminated by AI agents. Machine-rate growth. Compounding returns.
           </div>
         </div>
 
